@@ -24,39 +24,27 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "devil_fruits")
-public class DevilFruit implements Serializable {
-
+@Table(name = "regions")
+public class Region implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(length = 64, name = "name")
+	@Column(length = 32, name = "name")
 	private String name;
 
-	@Column(length = 64, name = "english_name")
-	private String englishName;
-
-	@ManyToOne
-	@JoinColumn(name = "devil_fruit_type_id")
-	private DevilFruitType devilFruitType;
-
-	public DevilFruit() {
-		//
+	public Region() {
 	}
 
-	public DevilFruit(Long id, String name, String englishName, DevilFruitType devilFruitType) {
+	public Region(Long id, String name) {
 		this.id = id;
 		this.name = name;
-		this.englishName = englishName;
-		this.devilFruitType = devilFruitType;
 	}
 
 	public Long getId() {
@@ -73,21 +61,5 @@ public class DevilFruit implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getEnglishName() {
-		return englishName;
-	}
-
-	public void setEnglishName(String englishName) {
-		this.englishName = englishName;
-	}
-
-	public DevilFruitType getDevilFruitType() {
-		return devilFruitType;
-	}
-
-	public void setDevilFruitType(DevilFruitType devilFruitType) {
-		this.devilFruitType = devilFruitType;
 	}
 }

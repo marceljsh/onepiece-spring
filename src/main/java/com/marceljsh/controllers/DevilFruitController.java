@@ -22,12 +22,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.marceljsh.models.dto.DevilFruitDTO;
 import com.marceljsh.models.entities.DevilFruit;
+import com.marceljsh.models.entities.DevilFruitType;
 import com.marceljsh.services.DevilFruitService;
+import com.marceljsh.services.DevilFruitTypeService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
@@ -37,8 +41,26 @@ public class DevilFruitController {
 	@Autowired
 	private DevilFruitService devilFruitService;
 
+	@Autowired
+	private DevilFruitTypeService devilFruitTypeService;
+
+	// * helper methods
+	public DevilFruit convertToDevilFruit(DevilFruitDTO devilFruitDTO) {
+		DevilFruit devilFruit = new DevilFruit();
+		System.out.printf("id: %d\n", devilFruit.getId());
+		DevilFruitType devilFruitType = devilFruitTypeService.findOne(devilFruitDTO.getDevilFruitTypeId());
+
+		devilFruit.setName(devilFruitDTO.getName());
+		devilFruit.setEnglishName(devilFruitDTO.getEnglishName());
+		devilFruit.setDevilFruitType(devilFruitType);
+
+		return devilFruit;
+	}
+
+	// * API endpoints
 	@PostMapping
-	public DevilFruit create(@RequestBody DevilFruit devilFruit) {
+	public DevilFruit create(@RequestBody DevilFruitDTO devilFruitDTO) {
+		DevilFruit devilFruit = convertToDevilFruit(devilFruitDTO);
 		return devilFruitService.save(devilFruit);
 	}
 
@@ -50,5 +72,11 @@ public class DevilFruitController {
 	@GetMapping
 	public Iterable<DevilFruit> find(@RequestParam(required = false) String keyword) {
 		return devilFruitService.find(keyword);
+	}
+
+	@PutMapping("/{id}")
+	public DevilFruit alter(@PathVariable("id") Long id, @RequestBody DevilFruitDTO devilFruitDTO) {
+		DevilFruit devilFruit = convertToDevilFruit(devilFruitDTO);
+		return devilFruitService.alter(id, devilFruit);
 	}
 }

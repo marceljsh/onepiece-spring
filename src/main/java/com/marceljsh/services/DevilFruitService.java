@@ -43,7 +43,7 @@ public class DevilFruitService {
 
 	public Iterable<DevilFruit> find(String keyword) {
 		if (keyword != null) {
-			return devilFruitRepo.findByNameContains(keyword);
+			return devilFruitRepo.findByKeyword(keyword);
 		} else {
 			return devilFruitRepo.findAll();
 		}

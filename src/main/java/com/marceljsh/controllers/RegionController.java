@@ -18,6 +18,7 @@
 package com.marceljsh.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,33 +28,38 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.marceljsh.models.entities.DevilFruitType;
-import com.marceljsh.services.DevilFruitTypeService;
+import com.marceljsh.models.entities.Region;
+import com.marceljsh.services.RegionService;
 
 @RestController
-@RequestMapping("/api/v1/df-types")
-public class DevilFruitTypeController {
+@RequestMapping("/api/v1/regions")
+public class RegionController {
 
 	@Autowired
-	private DevilFruitTypeService devilFruitTypeService;
+	private RegionService regionService;
 
 	@PostMapping
-	public DevilFruitType create(@RequestBody DevilFruitType devilFruitType) {
-		return devilFruitTypeService.save(devilFruitType);
+	public Region create(@RequestBody Region region) {
+		return regionService.save(region);
 	}
 
 	@GetMapping("/{id}")
-	public DevilFruitType findOne(@PathVariable("id") Long id) {
-		return devilFruitTypeService.findOne(id);
+	public Region findOne(@PathVariable Long id) {
+		return regionService.findOne(id);
 	}
 
 	@GetMapping
-	public Iterable<DevilFruitType> find(@RequestParam(required = false) String keyword) {
-		return devilFruitTypeService.find(keyword);
+	public Iterable<Region> find(@RequestParam(required = false) String keyword) {
+		return regionService.find(keyword);
 	}
 
 	@PutMapping("/{id}")
-	public DevilFruitType alter(@PathVariable("id") Long id, @RequestBody DevilFruitType devilFruitType) {
-		return devilFruitTypeService.alter(id, devilFruitType);
+	public Region alter(@PathVariable Long id, @RequestBody Region region) {
+		return regionService.alter(id, region);
+	}
+
+	@DeleteMapping("/{id}")
+	public void delete(@PathVariable Long id) {
+		regionService.delete(id);
 	}
 }
