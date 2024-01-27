@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this code.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package com.marceljsh.models.entities;
@@ -29,7 +29,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "regions")
 public class Region implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id

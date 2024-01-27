@@ -17,9 +17,9 @@
 
 package com.marceljsh.exceptions;
 
-public class ResourceNotFoundException extends RuntimeException {
+public class BadRequestException extends RuntimeException {
 
-	public ResourceNotFoundException(String message) {
+	public BadRequestException(String message) {
 		super(message);
 	}
 }

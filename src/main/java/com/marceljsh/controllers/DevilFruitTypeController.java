@@ -12,12 +12,13 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this code.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package com.marceljsh.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.marceljsh.exceptions.BadRequestException;
 import com.marceljsh.models.entities.DevilFruitType;
 import com.marceljsh.services.DevilFruitTypeService;
 
@@ -39,6 +41,9 @@ public class DevilFruitTypeController {
 
 	@PostMapping
 	public DevilFruitType create(@RequestBody DevilFruitType devilFruitType) {
+		if (!StringUtils.hasText(devilFruitType.getName())) {
+			throw new BadRequestException("devil fruit type name is required");
+		}
 		return devilFruitTypeService.save(devilFruitType);
 	}
 

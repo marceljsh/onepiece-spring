@@ -12,18 +12,32 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this code.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package com.marceljsh.common;
 
-public class ErrorResponse {
-	private int status;
-	private String message;
+import java.time.LocalDateTime;
 
-	public ErrorResponse(int status, String message) {
+public class ErrorResponse {
+	private LocalDateTime timestamp;
+	private int status;
+	private String error;
+	private String path;
+
+	public ErrorResponse(LocalDateTime timestamp, int status, String error, String path) {
+		this.timestamp = timestamp;
 		this.status = status;
-		this.message = message;
+		this.error = error;
+		this.path = path;
+	}
+
+	public LocalDateTime getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(LocalDateTime timestamp) {
+		this.timestamp = timestamp;
 	}
 
 	public int getStatus() {
@@ -34,11 +48,19 @@ public class ErrorResponse {
 		this.status = status;
 	}
 
-	public String getMessage() {
-		return message;
+	public String getError() {
+		return error;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setError(String error) {
+		this.error = error;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 }

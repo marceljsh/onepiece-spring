@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this code.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this code. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package com.marceljsh.services;
@@ -38,7 +38,9 @@ public class DevilFruitService {
 	}
 
 	public DevilFruit findOne(Long id) {
-		return devilFruitRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("devil fruit not found"));
+		return devilFruitRepo
+				.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("devil fruit not found"));
 	}
 
 	public Iterable<DevilFruit> find(String keyword) {
