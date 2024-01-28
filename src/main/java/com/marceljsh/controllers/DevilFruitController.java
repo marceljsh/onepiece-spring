@@ -1,19 +1,14 @@
-/*
- * Copyright (©) 2024 Marcel Joshua (https://marceljsh.vercel.app)
- *
- * This code is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This code is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this code. If not, see <http://www.gnu.org/licenses/>.
- */
+// **************************************************************************
+// * This code was created by Marcel Joshua (https://github.com/marceljsh)
+// * within the context of One Piece Spring REST API.
+// * Copyright (©) 2024 by Marcel Joshua, all rights reserved.
+// *
+// * This file was written using Java Spring Boot
+// * and follows the principles of SOLID.
+// *
+// * Feel free to use or modify this code for your own purposes,
+// * but please include this copyright notice.
+// **************************************************************************
 
 package com.marceljsh.controllers;
 
@@ -36,6 +31,7 @@ import com.marceljsh.services.DevilFruitTypeService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -66,27 +62,23 @@ public class DevilFruitController {
 
 	// * API endpoints
 	@PostMapping
-	public DevilFruit create(@RequestBody DevilFruitDTO devilFruitDTO) {
-		DevilFruit devilFruit = convertToDevilFruit(devilFruitDTO);
-		return devilFruitService.save(devilFruit);
-	}
-
-	// @GetMapping("/{id}")
-	// public DevilFruit findOne(@PathVariable("id") Long id) {
-	// return devilFruitService.findOne(id);
-	// }
-
-	@GetMapping("/{id}")
-	public ResponseEntity<?> findOne(@PathVariable("id") String id, HttpServletRequest request) {
+	public ResponseEntity<?> create(@RequestBody DevilFruitDTO devilFruitDTO, HttpServletRequest request) {
 		try {
-			if (!id.matches("\\d+")) {
-				throw new IllegalArgumentException("id provided must be numeric");
+			if (devilFruitDTO.getDevilFruitTypeId() == null) {
+				throw new IllegalArgumentException("devil fruit type id is required");
 			}
 
-			Long numericId = Long.parseLong(id);
-			DevilFruit devilFruit = devilFruitService.findOne(numericId);
+			if (devilFruitDTO.getName() == null || devilFruitDTO.getName().trim().isEmpty()) {
+				throw new IllegalArgumentException("devil fruit name is required");
+			}
 
-			return ResponseEntity.ok().body(devilFruit);
+			if (devilFruitDTO.getEnglishName() == null || devilFruitDTO.getEnglishName().trim().isEmpty()) {
+				throw new IllegalArgumentException("devil fruit english name is required");
+			}
+
+			DevilFruit devilFruit = convertToDevilFruit(devilFruitDTO);
+
+			return ResponseEntity.ok().body(devilFruitService.save(devilFruit));
 
 		} catch (IllegalArgumentException e) {
 			ErrorResponse errorResponse = new ErrorResponse(
@@ -95,7 +87,8 @@ public class DevilFruitController {
 					e.getMessage(),
 					request.getRequestURI());
 
-			return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+			return ResponseEntity.badRequest().body(errorResponse);
+
 		} catch (ResourceNotFoundException e) {
 			ErrorResponse errorResponse = new ErrorResponse(
 					LocalDateTime.now(),
@@ -103,18 +96,93 @@ public class DevilFruitController {
 					e.getMessage(),
 					request.getRequestURI());
 
-			return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+		}
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<?> readOne(@PathVariable("id") String id, HttpServletRequest request) {
+		try {
+			Long numericId = Long.parseLong(id);
+			DevilFruit devilFruit = devilFruitService.findOne(numericId);
+
+			return ResponseEntity.ok().body(devilFruit);
+
+		} catch (ResourceNotFoundException e) {
+			ErrorResponse errorResponse = new ErrorResponse(
+					LocalDateTime.now(),
+					HttpStatus.NOT_FOUND.value(),
+					e.getMessage(),
+					request.getRequestURI());
+
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
 		}
 	}
 
 	@GetMapping
-	public Iterable<DevilFruit> find(@RequestParam(required = false) String keyword) {
-		return devilFruitService.find(keyword);
+	public ResponseEntity<?> read(@RequestParam(required = false) String keyword) {
+		Iterable<DevilFruit> devilFruits = devilFruitService.find(keyword);
+		return ResponseEntity.ok().body(devilFruits);
 	}
 
 	@PutMapping("/{id}")
-	public DevilFruit alter(@PathVariable("id") Long id, @RequestBody DevilFruitDTO devilFruitDTO) {
-		DevilFruit devilFruit = convertToDevilFruit(devilFruitDTO);
-		return devilFruitService.alter(id, devilFruit);
+	public ResponseEntity<?> update(@PathVariable("id") String id, @RequestBody DevilFruitDTO devilFruitDTO,
+			HttpServletRequest request) {
+		try {
+			if (devilFruitDTO.getDevilFruitTypeId() == null) {
+				throw new IllegalArgumentException("devil fruit type id is required");
+			}
+
+			if (devilFruitDTO.getName() == null || devilFruitDTO.getName().trim().isEmpty()) {
+				throw new IllegalArgumentException("devil fruit name is required");
+			}
+
+			if (devilFruitDTO.getEnglishName() == null || devilFruitDTO.getEnglishName().trim().isEmpty()) {
+				throw new IllegalArgumentException("devil fruit english name is required");
+			}
+
+			DevilFruit devilFruit = convertToDevilFruit(devilFruitDTO);
+			Long numericId = Long.parseLong(id);
+			DevilFruit result = devilFruitService.alter(numericId, devilFruit);
+
+			return ResponseEntity.ok().body(result);
+
+		} catch (IllegalArgumentException e) {
+			ErrorResponse errorResponse = new ErrorResponse(
+					LocalDateTime.now(),
+					HttpStatus.BAD_REQUEST.value(),
+					e.getMessage(),
+					request.getRequestURI());
+
+			return ResponseEntity.badRequest().body(errorResponse);
+
+		} catch (ResourceNotFoundException e) {
+			ErrorResponse errorResponse = new ErrorResponse(
+					LocalDateTime.now(),
+					HttpStatus.NOT_FOUND.value(),
+					e.getMessage(),
+					request.getRequestURI());
+
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+		}
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> delete(@PathVariable("id") String id, HttpServletRequest request) {
+		try {
+			Long numericId = Long.parseLong(id);
+			devilFruitService.remove(numericId);
+
+			return ResponseEntity.ok().body("Devil fruit deleted successfully");
+
+		} catch (IllegalArgumentException e) {
+			ErrorResponse errorResponse = new ErrorResponse(
+					LocalDateTime.now(),
+					HttpStatus.NOT_FOUND.value(),
+					e.getMessage(),
+					request.getRequestURI());
+
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+		}
 	}
 }

@@ -1,19 +1,14 @@
-/*
- * Copyright (©) 2024 Marcel Joshua (https://marceljsh.vercel.app)
- *
- * This code is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This code is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this code. If not, see <http://www.gnu.org/licenses/>.
- */
+// **************************************************************************
+// * This code was created by Marcel Joshua (https://github.com/marceljsh)
+// * within the context of One Piece Spring REST API.
+// * Copyright (©) 2024 by Marcel Joshua, all rights reserved.
+// *
+// * This file was written using Java Spring Boot
+// * and follows the principles of SOLID.
+// *
+// * Feel free to use or modify this code for your own purposes,
+// * but please include this copyright notice.
+// **************************************************************************
 
 package com.marceljsh.controllers;
 
@@ -44,22 +39,22 @@ public class RegionController {
 	}
 
 	@GetMapping("/{id}")
-	public Region findOne(@PathVariable Long id) {
+	public Region readOne(@PathVariable Long id) {
 		return regionService.findOne(id);
 	}
 
 	@GetMapping
-	public Iterable<Region> find(@RequestParam(required = false) String keyword) {
+	public Iterable<Region> read(@RequestParam(required = false) String keyword) {
 		return regionService.find(keyword);
 	}
 
 	@PutMapping("/{id}")
-	public Region alter(@PathVariable Long id, @RequestBody Region region) {
+	public Region update(@PathVariable Long id, @RequestBody Region region) {
 		return regionService.alter(id, region);
 	}
 
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable Long id) {
-		regionService.delete(id);
+		regionService.remove(id);
 	}
 }

@@ -1,19 +1,14 @@
-/*
- * Copyright (©) 2024 Marcel Joshua (https://marceljsh.vercel.app)
- *
- * This code is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This code is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this code. If not, see <http://www.gnu.org/licenses/>.
- */
+// **************************************************************************
+// * This code was created by Marcel Joshua (https://github.com/marceljsh)
+// * within the context of One Piece Spring REST API.
+// * Copyright (©) 2024 by Marcel Joshua, all rights reserved.
+// *
+// * This file was written using Java Spring Boot
+// * and follows the principles of SOLID.
+// *
+// * Feel free to use or modify this code for your own purposes,
+// * but please include this copyright notice.
+// **************************************************************************
 
 package com.marceljsh.services;
 
@@ -52,7 +47,9 @@ public class DevilFruitService {
 	}
 
 	public DevilFruit alter(Long id, DevilFruit devilFruit) {
-		DevilFruit existingDevilFruit = devilFruitRepo.findById(id).get();
+		DevilFruit existingDevilFruit = devilFruitRepo
+				.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("devil fruit not found"));
 
 		existingDevilFruit.setName(devilFruit.getName());
 		existingDevilFruit.setEnglishName(devilFruit.getEnglishName());
@@ -61,6 +58,15 @@ public class DevilFruitService {
 		return devilFruitRepo.save(existingDevilFruit);
 	}
 
+	/**
+	 * Deletes the entity with the given id.
+	 * <p>
+	 * If the entity is not found, it is silently ignored.
+	 *
+	 * @param id must not be {@literal null}.
+	 * @throws IllegalArgumentException in case the given {@literal id} is
+	 *                                  {@literal null}
+	 */
 	public void remove(Long id) {
 		devilFruitRepo.deleteById(id);
 	}
