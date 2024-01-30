@@ -121,12 +121,12 @@ public class DevilFruitTypeService {
 	 *                                           not found.
 	 */
 	public DevilFruitType alter(Long id, DevilFruitType devilFruitType) {
-		DevilFruitType existingDevilFruitType = devilFruitTypeRepo.findById(id)
+		DevilFruitType devilFruitTypeToAlter = devilFruitTypeRepo.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("devil fruit type not found"));
 
-		existingDevilFruitType.setName(devilFruitType.getName());
+		devilFruitTypeToAlter.setName(devilFruitType.getName());
 
-		return devilFruitTypeRepo.save(existingDevilFruitType);
+		return devilFruitTypeRepo.save(devilFruitTypeToAlter);
 	}
 
 	/**

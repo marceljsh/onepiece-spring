@@ -45,7 +45,7 @@ public class DevilFruitTypeController {
 	public ResponseEntity<?> create(@RequestBody DevilFruitType devilFruitType, HttpServletRequest request) {
 		try {
 			if (devilFruitType.getName() == null || devilFruitType.getName().trim().isEmpty()) {
-				throw new IllegalArgumentException("devil fruit type name is required");
+				throw new IllegalArgumentException("devil fruit type name cannot be empty");
 			}
 
 			return ResponseEntity.ok().body(devilFruitTypeService.save(devilFruitType));
@@ -99,7 +99,7 @@ public class DevilFruitTypeController {
 			Long numericId = Long.parseLong(id);
 
 			if (devilFruitType.getName() == null || devilFruitType.getName().trim().isEmpty()) {
-				throw new IllegalArgumentException("devil fruit type name is required");
+				throw new IllegalArgumentException("devil fruit type name cannot be empty");
 			}
 
 			return ResponseEntity.ok().body(devilFruitTypeService.alter(numericId, devilFruitType));

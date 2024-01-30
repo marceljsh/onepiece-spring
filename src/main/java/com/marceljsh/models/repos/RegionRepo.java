@@ -19,5 +19,5 @@ import org.springframework.data.repository.CrudRepository;
 import com.marceljsh.models.entities.Region;
 
 public interface RegionRepo extends CrudRepository<Region, Long> {
-	List<Region> findByNameContains(String name);
+	List<Region> findByNameContains(String keyword);
 }

@@ -14,15 +14,10 @@ package com.marceljsh.models.repos;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 
-import com.marceljsh.models.entities.DevilFruit;
+import com.marceljsh.models.entities.Occupation;
 
-public interface DevilFruitRepo extends CrudRepository<DevilFruit, Long> {
-	// List<DevilFruit> findByNameContains(String keyword);
-
-	@Query("SELECT df FROM DevilFruit df WHERE df.name LIKE %:keyword% OR df.englishName LIKE %:keyword% OR df.devilFruitType.name LIKE %:keyword%")
-	List<DevilFruit> findByKeyword(@Param("keyword") String keyword);
+public interface OccupationRepo extends CrudRepository<Occupation, Long> {
+	List<Occupation> findByNameContains(String keyword);
 }

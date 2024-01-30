@@ -65,15 +65,15 @@ public class DevilFruitController {
 	public ResponseEntity<?> create(@RequestBody DevilFruitDTO devilFruitDTO, HttpServletRequest request) {
 		try {
 			if (devilFruitDTO.getDevilFruitTypeId() == null) {
-				throw new IllegalArgumentException("devil fruit type id is required");
+				throw new IllegalArgumentException("devil fruit type id cannot be empty");
 			}
 
 			if (devilFruitDTO.getName() == null || devilFruitDTO.getName().trim().isEmpty()) {
-				throw new IllegalArgumentException("devil fruit name is required");
+				throw new IllegalArgumentException("devil fruit name cannot be empty");
 			}
 
 			if (devilFruitDTO.getEnglishName() == null || devilFruitDTO.getEnglishName().trim().isEmpty()) {
-				throw new IllegalArgumentException("devil fruit english name is required");
+				throw new IllegalArgumentException("devil fruit english name cannot be empty");
 			}
 
 			DevilFruit devilFruit = convertToDevilFruit(devilFruitDTO);
@@ -100,6 +100,16 @@ public class DevilFruitController {
 		}
 	}
 
+	/**
+	 * Creates a new DevilFruit.
+	 *
+	 * @param devilFruitDTO The DevilFruitDTO object containing the details of the
+	 *                      DevilFruit to create.
+	 * @param request       The HttpServletRequest object.
+	 * 
+	 * @return The ResponseEntity containing the created DevilFruit or an error
+	 *         response.
+	 */
 	@GetMapping("/{id}")
 	public ResponseEntity<?> readOne(@PathVariable("id") String id, HttpServletRequest request) {
 		try {
@@ -107,6 +117,15 @@ public class DevilFruitController {
 			DevilFruit devilFruit = devilFruitService.findOne(numericId);
 
 			return ResponseEntity.ok().body(devilFruit);
+
+		} catch (NumberFormatException e) {
+			ErrorResponse errorResponse = new ErrorResponse(
+					LocalDateTime.now(),
+					HttpStatus.BAD_REQUEST.value(),
+					"devil fruit id must be numeric",
+					request.getRequestURI());
+
+			return ResponseEntity.badRequest().body(errorResponse);
 
 		} catch (ResourceNotFoundException e) {
 			ErrorResponse errorResponse = new ErrorResponse(
@@ -120,9 +139,19 @@ public class DevilFruitController {
 	}
 
 	@GetMapping
-	public ResponseEntity<?> read(@RequestParam(required = false) String keyword) {
-		Iterable<DevilFruit> devilFruits = devilFruitService.find(keyword);
-		return ResponseEntity.ok().body(devilFruits);
+	public ResponseEntity<?> read(@RequestParam(required = false) String keyword, HttpServletRequest request) {
+		try {
+			return ResponseEntity.ok().body(devilFruitService.find(keyword));
+
+		} catch (IllegalArgumentException e) {
+			ErrorResponse errorResponse = new ErrorResponse(
+					LocalDateTime.now(),
+					HttpStatus.BAD_REQUEST.value(),
+					e.getMessage(),
+					request.getRequestURI());
+
+			return ResponseEntity.badRequest().body(errorResponse);
+		}
 	}
 
 	@PutMapping("/{id}")
@@ -130,15 +159,15 @@ public class DevilFruitController {
 			HttpServletRequest request) {
 		try {
 			if (devilFruitDTO.getDevilFruitTypeId() == null) {
-				throw new IllegalArgumentException("devil fruit type id is required");
+				throw new IllegalArgumentException("devil fruit type id cannot be empty");
 			}
 
 			if (devilFruitDTO.getName() == null || devilFruitDTO.getName().trim().isEmpty()) {
-				throw new IllegalArgumentException("devil fruit name is required");
+				throw new IllegalArgumentException("devil fruit name cannot be empty");
 			}
 
 			if (devilFruitDTO.getEnglishName() == null || devilFruitDTO.getEnglishName().trim().isEmpty()) {
-				throw new IllegalArgumentException("devil fruit english name is required");
+				throw new IllegalArgumentException("devil fruit english name cannot be empty");
 			}
 
 			DevilFruit devilFruit = convertToDevilFruit(devilFruitDTO);
@@ -173,7 +202,7 @@ public class DevilFruitController {
 			Long numericId = Long.parseLong(id);
 			devilFruitService.remove(numericId);
 
-			return ResponseEntity.ok().body("Devil fruit deleted successfully");
+			return ResponseEntity.ok().body("devil fruit deleted successfully");
 
 		} catch (IllegalArgumentException e) {
 			ErrorResponse errorResponse = new ErrorResponse(

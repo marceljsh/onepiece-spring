@@ -29,35 +29,29 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.marceljsh.common.ErrorResponse;
 import com.marceljsh.exceptions.ResourceNotFoundException;
-import com.marceljsh.models.entities.Region;
-import com.marceljsh.services.RegionService;
+import com.marceljsh.models.entities.Occupation;
+import com.marceljsh.services.OccupationService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/api/v1/regions")
-public class RegionController {
+@RequestMapping("/api/v1/occupations")
+public class OccupationController {
 
 	@Autowired
-	private RegionService regionService;
+	private OccupationService occupationService;
 
 	@PostMapping
-	public ResponseEntity<?> create(@RequestBody Region region, HttpServletRequest request) {
+	public ResponseEntity<?> create(@RequestBody Occupation occupation, HttpServletRequest request) {
 		try {
-			if (region.getName() == null || region.getName().trim().isEmpty()) {
-				throw new IllegalArgumentException("region name cannot be empty");
+			if (occupation.getName() == null || occupation.getName().trim().isEmpty()) {
+				throw new IllegalArgumentException("occupation name cannot be empty");
 			}
 
-			return ResponseEntity.ok(regionService.save(region));
+			return ResponseEntity.ok(occupationService.save(occupation));
 
 		} catch (IllegalArgumentException e) {
-			ErrorResponse errorResponse = new ErrorResponse(
-					LocalDateTime.now(),
-					HttpStatus.BAD_REQUEST.value(),
-					e.getMessage(),
-					request.getRequestURI());
-
-			return ResponseEntity.badRequest().body(errorResponse);
+			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
 
@@ -65,17 +59,16 @@ public class RegionController {
 	public ResponseEntity<?> readOne(@PathVariable String id, HttpServletRequest request) {
 		try {
 			Long numericId = Long.parseLong(id);
-			return ResponseEntity.ok(regionService.findOne(numericId));
+			return ResponseEntity.ok(occupationService.findOne(numericId));
 
 		} catch (NumberFormatException e) {
 			ErrorResponse errorResponse = new ErrorResponse(
 					LocalDateTime.now(),
 					HttpStatus.BAD_REQUEST.value(),
-					"region id must be numeric",
+					e.getMessage(),
 					request.getRequestURI());
 
 			return ResponseEntity.badRequest().body(errorResponse);
-
 		} catch (ResourceNotFoundException e) {
 			ErrorResponse errorResponse = new ErrorResponse(
 					LocalDateTime.now(),
@@ -90,7 +83,8 @@ public class RegionController {
 	@GetMapping
 	public ResponseEntity<?> read(@RequestParam(required = false) String keyword, HttpServletRequest request) {
 		try {
-			return ResponseEntity.ok(regionService.find(keyword));
+			return ResponseEntity.ok(occupationService.find(keyword));
+
 		} catch (IllegalArgumentException e) {
 			ErrorResponse errorResponse = new ErrorResponse(
 					LocalDateTime.now(),
@@ -103,22 +97,21 @@ public class RegionController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@PathVariable String id, @RequestBody Region region, HttpServletRequest request) {
+	public ResponseEntity<?> update(@PathVariable String id, @RequestBody Occupation occupation,
+			HttpServletRequest request) {
 		try {
 			Long numericId = Long.parseLong(id);
-			regionService.alter(numericId, region);
-
-			return ResponseEntity.ok().body(regionService.findOne(numericId));
+			occupationService.alter(numericId, occupation);
+			return ResponseEntity.ok().build();
 
 		} catch (NumberFormatException e) {
 			ErrorResponse errorResponse = new ErrorResponse(
 					LocalDateTime.now(),
 					HttpStatus.BAD_REQUEST.value(),
-					"region id must be numeric",
+					"occupation id must be numeric",
 					request.getRequestURI());
 
 			return ResponseEntity.badRequest().body(errorResponse);
-
 		} catch (ResourceNotFoundException e) {
 			ErrorResponse errorResponse = new ErrorResponse(
 					LocalDateTime.now(),
@@ -127,6 +120,8 @@ public class RegionController {
 					request.getRequestURI());
 
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
 
@@ -134,19 +129,17 @@ public class RegionController {
 	public ResponseEntity<?> delete(@PathVariable String id, HttpServletRequest request) {
 		try {
 			Long numericId = Long.parseLong(id);
-			regionService.remove(numericId);
-
-			return ResponseEntity.ok().body("region deleted successfully");
+			occupationService.remove(numericId);
+			return ResponseEntity.ok().build();
 
 		} catch (NumberFormatException e) {
 			ErrorResponse errorResponse = new ErrorResponse(
 					LocalDateTime.now(),
 					HttpStatus.BAD_REQUEST.value(),
-					"region id must be numeric",
+					"occupation id must be numeric",
 					request.getRequestURI());
 
 			return ResponseEntity.badRequest().body(errorResponse);
-
 		} catch (ResourceNotFoundException e) {
 			ErrorResponse errorResponse = new ErrorResponse(
 					LocalDateTime.now(),

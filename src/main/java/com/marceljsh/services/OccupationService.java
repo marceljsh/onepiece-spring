@@ -17,17 +17,17 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
 import com.marceljsh.exceptions.ResourceNotFoundException;
-import com.marceljsh.models.entities.DevilFruit;
-import com.marceljsh.models.repos.DevilFruitRepo;
+import com.marceljsh.models.entities.Occupation;
+import com.marceljsh.models.repos.OccupationRepo;
 
 import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
-public class DevilFruitService {
+public class OccupationService {
 
 	@Autowired
-	private DevilFruitRepo devilFruitRepo;
+	private OccupationRepo occupationRepo;
 
 	/**
 	 * Saves a given entity. Use the returned instance for further operations as the
@@ -51,27 +51,26 @@ public class DevilFruitService {
 	 *                                           present but does not exist in the
 	 *                                           database.
 	 */
-	public DevilFruit save(DevilFruit devilFruit) {
-		return devilFruitRepo.save(devilFruit);
+	public Occupation save(Occupation occupation) {
+		return occupationRepo.save(occupation);
 	}
 
 	/**
-	 * Returns whether an entity with the given id exists.
+	 * Retrieves an entity by its id.
 	 *
 	 * @param id must not be {@literal null}.
 	 * 
-	 * @return {@literal true} if an entity with the given id exists,
-	 *         {@literal false} otherwise.
+	 * @return the entity with the given id or {@literal Optional#empty()} if none
+	 *         found.
 	 * 
 	 * @throws IllegalArgumentException  if {@literal id} is {@literal null}.
 	 * 
-	 * @throws ResourceNotFoundException in case the given {@link target entity} is
-	 *                                   {@literal null} a.k.a not found.
+	 * @throws ResourceNotFoundException in case the given {@link target
+	 *                                   entity} is {@literal null} a.k.a
+	 *                                   not found.
 	 */
-	public DevilFruit findOne(Long id) {
-		return devilFruitRepo
-				.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("devil fruit not found"));
+	public Occupation findOne(Long id) {
+		return occupationRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("occupation not found"));
 	}
 
 	/**
@@ -91,12 +90,11 @@ public class DevilFruitService {
 	 * @throws IllegalArgumentException in case the given {@link Iterable ids} or
 	 *                                  one of its items is {@literal null}.
 	 */
-	public Iterable<DevilFruit> find(String keyword) {
+	public Iterable<Occupation> find(String keyword) {
 		if (keyword != null) {
-			return devilFruitRepo.findByKeyword(keyword);
-		} else {
-			return devilFruitRepo.findAll();
+			return occupationRepo.findByNameContains(keyword);
 		}
+		return occupationRepo.findAll();
 	}
 
 	/**
@@ -124,16 +122,13 @@ public class DevilFruitService {
 	 *                                           entity} is {@literal null} a.k.a
 	 *                                           not found.
 	 */
-	public DevilFruit alter(Long id, DevilFruit devilFruit) {
-		DevilFruit devilFruitToAlter = devilFruitRepo
-				.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("devil fruit not found"));
+	public Occupation alter(Long id, Occupation occupation) {
+		Occupation occupationToAlter = occupationRepo.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("occupation not found"));
 
-		devilFruitToAlter.setName(devilFruit.getName());
-		devilFruitToAlter.setEnglishName(devilFruit.getEnglishName());
-		devilFruitToAlter.setDevilFruitType(devilFruit.getDevilFruitType());
+		occupationToAlter.setName(occupation.getName());
 
-		return devilFruitRepo.save(devilFruitToAlter);
+		return occupationRepo.save(occupationToAlter);
 	}
 
 	/**
@@ -147,6 +142,6 @@ public class DevilFruitService {
 	 *                                  {@literal null}
 	 */
 	public void remove(Long id) {
-		devilFruitRepo.deleteById(id);
+		occupationRepo.deleteById(id);
 	}
 }

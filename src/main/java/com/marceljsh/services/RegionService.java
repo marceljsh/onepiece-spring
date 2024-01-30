@@ -59,12 +59,18 @@ public class RegionService {
 	 * Retrieves an entity by its id.
 	 *
 	 * @param id must not be {@literal null}.
+	 * 
 	 * @return the entity with the given id or {@literal Optional#empty()} if none
 	 *         found.
-	 * @throws IllegalArgumentException if {@literal id} is {@literal null}.
+	 * 
+	 * @throws IllegalArgumentException  if {@literal id} is {@literal null}.
+	 * 
+	 * @throws ResourceNotFoundException in case the given {@link target
+	 *                                   entity} is {@literal null} a.k.a
+	 *                                   not found.
 	 */
 	public Region findOne(Long id) {
-		return regionRepo.findById(id).get();
+		return regionRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("region fruit not found"));
 	}
 
 	/**
@@ -118,11 +124,12 @@ public class RegionService {
 	 *                                           not found.
 	 */
 	public Region alter(Long id, Region region) {
-		Region existingRegion = regionRepo.findById(id).get();
+		Region regionToAlter = regionRepo.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("region not found"));
 
-		existingRegion.setName(region.getName());
+		regionToAlter.setName(region.getName());
 
-		return regionRepo.save(existingRegion);
+		return regionRepo.save(regionToAlter);
 	}
 
 	/**

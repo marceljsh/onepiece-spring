@@ -19,5 +19,5 @@ import org.springframework.data.repository.CrudRepository;
 import com.marceljsh.models.entities.DevilFruitType;
 
 public interface DevilFruitTypeRepo extends CrudRepository<DevilFruitType, Long> {
-	List<DevilFruitType> findByNameContains(String name);
+	List<DevilFruitType> findByNameContains(String keyword);
 }
