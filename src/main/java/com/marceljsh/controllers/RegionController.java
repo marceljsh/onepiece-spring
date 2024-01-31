@@ -12,10 +12,9 @@
 
 package com.marceljsh.controllers;
 
-import java.time.LocalDateTime;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,12 +26,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.marceljsh.common.ErrorResponse;
-import com.marceljsh.exceptions.ResourceNotFoundException;
 import com.marceljsh.models.entities.Region;
 import com.marceljsh.services.RegionService;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/v1/regions")
@@ -41,120 +36,60 @@ public class RegionController {
 	@Autowired
 	private RegionService regionService;
 
+	/**
+	 * Create a new region.
+	 *
+	 * @param region The region object to be created.
+	 * @return ResponseEntity with the created region.
+	 */
 	@PostMapping
-	public ResponseEntity<?> create(@RequestBody Region region, HttpServletRequest request) {
-		try {
-			if (region.getName() == null || region.getName().trim().isEmpty()) {
-				throw new IllegalArgumentException("region name cannot be empty");
-			}
-
-			return ResponseEntity.ok(regionService.save(region));
-
-		} catch (IllegalArgumentException e) {
-			ErrorResponse errorResponse = new ErrorResponse(
-					HttpStatus.BAD_REQUEST.value(),
-					e.getMessage(),
-					LocalDateTime.now(),
-					request.getRequestURI());
-
-			return ResponseEntity.badRequest().body(errorResponse);
-		}
+	public ResponseEntity<?> create(@RequestBody Region region) {
+		return ResponseEntity.ok(regionService.save(region));
 	}
 
+	/**
+	 * Get a region by its ID.
+	 *
+	 * @param id The ID of the region to retrieve.
+	 * @return ResponseEntity with the retrieved region.
+	 */
 	@GetMapping("/{id}")
-	public ResponseEntity<?> readOne(@PathVariable String id, HttpServletRequest request) {
-		try {
-			Long numericId = Long.parseLong(id);
-			return ResponseEntity.ok(regionService.findOne(numericId));
-
-		} catch (NumberFormatException e) {
-			ErrorResponse errorResponse = new ErrorResponse(
-					HttpStatus.BAD_REQUEST.value(),
-					"region id must be numeric",
-					LocalDateTime.now(),
-					request.getRequestURI());
-
-			return ResponseEntity.badRequest().body(errorResponse);
-
-		} catch (ResourceNotFoundException e) {
-			ErrorResponse errorResponse = new ErrorResponse(
-					HttpStatus.NOT_FOUND.value(),
-					e.getMessage(),
-					LocalDateTime.now(),
-					request.getRequestURI());
-
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-		}
+	public ResponseEntity<?> readOne(@PathVariable Long id) {
+		return ResponseEntity.ok(regionService.findOne(id));
 	}
 
+	/**
+	 * Get all regions or filter regions by keyword.
+	 *
+	 * @param keyword (optional) The keyword to filter regions by.
+	 * @return ResponseEntity with the list of regions.
+	 */
 	@GetMapping
-	public ResponseEntity<?> read(@RequestParam(required = false) String keyword, HttpServletRequest request) {
-		try {
-			return ResponseEntity.ok(regionService.find(keyword));
-		} catch (IllegalArgumentException e) {
-			ErrorResponse errorResponse = new ErrorResponse(
-					HttpStatus.BAD_REQUEST.value(),
-					e.getMessage(),
-					LocalDateTime.now(),
-					request.getRequestURI());
-
-			return ResponseEntity.badRequest().body(errorResponse);
-		}
+	public ResponseEntity<?> read(@RequestParam(required = false) String keyword) {
+		return ResponseEntity.ok(regionService.find(keyword));
 	}
 
+	/**
+	 * Update a region by its ID.
+	 *
+	 * @param id     The ID of the region to update.
+	 * @param region The updated region object.
+	 * @return ResponseEntity with the updated region.
+	 */
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@PathVariable String id, @RequestBody Region region, HttpServletRequest request) {
-		try {
-			Long numericId = Long.parseLong(id);
-			regionService.alter(numericId, region);
-
-			return ResponseEntity.ok().body(regionService.findOne(numericId));
-
-		} catch (NumberFormatException e) {
-			ErrorResponse errorResponse = new ErrorResponse(
-					HttpStatus.BAD_REQUEST.value(),
-					"region id must be numeric",
-					LocalDateTime.now(),
-					request.getRequestURI());
-
-			return ResponseEntity.badRequest().body(errorResponse);
-
-		} catch (ResourceNotFoundException e) {
-			ErrorResponse errorResponse = new ErrorResponse(
-					HttpStatus.NOT_FOUND.value(),
-					e.getMessage(),
-					LocalDateTime.now(),
-					request.getRequestURI());
-
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-		}
+	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Region region) {
+		return ResponseEntity.ok().body(regionService.alter(id, region));
 	}
 
+	/**
+	 * Delete a region by its ID.
+	 *
+	 * @param id The ID of the region to delete.
+	 * @return ResponseEntity with a success message.
+	 */
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(@PathVariable String id, HttpServletRequest request) {
-		try {
-			Long numericId = Long.parseLong(id);
-			regionService.remove(numericId);
-
-			return ResponseEntity.ok().body("region deleted successfully");
-
-		} catch (NumberFormatException e) {
-			ErrorResponse errorResponse = new ErrorResponse(
-					HttpStatus.BAD_REQUEST.value(),
-					"region id must be numeric",
-					LocalDateTime.now(),
-					request.getRequestURI());
-
-			return ResponseEntity.badRequest().body(errorResponse);
-
-		} catch (ResourceNotFoundException e) {
-			ErrorResponse errorResponse = new ErrorResponse(
-					HttpStatus.NOT_FOUND.value(),
-					e.getMessage(),
-					LocalDateTime.now(),
-					request.getRequestURI());
-
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-		}
+	public ResponseEntity<?> delete(@PathVariable Long id) {
+		regionService.remove(id);
+		return ResponseEntity.ok().body(Map.of("message", "region deleted successfully"));
 	}
 }

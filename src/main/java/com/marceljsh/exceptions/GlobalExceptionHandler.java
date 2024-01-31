@@ -40,7 +40,8 @@ public class GlobalExceptionHandler {
 				error,
 				LocalDateTime.now(),
 				request.getRequestURI());
-		return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+
+		return ResponseEntity.badRequest().body(errorResponse);
 	}
 
 	@ExceptionHandler(HttpMessageNotReadableException.class)
@@ -51,7 +52,8 @@ public class GlobalExceptionHandler {
 				"Malformed JSON request: " + ex.getMessage(),
 				LocalDateTime.now(),
 				request.getRequestURI());
-		return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+
+		return ResponseEntity.badRequest().body(errorResponse);
 	}
 
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
@@ -62,7 +64,8 @@ public class GlobalExceptionHandler {
 				ex.getMessage(),
 				LocalDateTime.now(),
 				request.getRequestURI());
-		return new ResponseEntity<>(errorResponse, HttpStatus.METHOD_NOT_ALLOWED);
+
+		return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(errorResponse);
 	}
 
 	@ExceptionHandler(ResourceNotFoundException.class)
@@ -72,7 +75,8 @@ public class GlobalExceptionHandler {
 				ex.getMessage(),
 				LocalDateTime.now(),
 				request.getRequestURI());
-		return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
 	}
 
 	@ExceptionHandler(DataIntegrityViolationException.class)
@@ -83,7 +87,8 @@ public class GlobalExceptionHandler {
 				ex.getMessage(),
 				LocalDateTime.now(),
 				request.getRequestURI());
-		return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+
+		return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
 	}
 
 	@ExceptionHandler(Exception.class)
@@ -93,17 +98,16 @@ public class GlobalExceptionHandler {
 				ex.getMessage(),
 				LocalDateTime.now(),
 				request.getRequestURI());
-		return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
 	}
 
 	// @ExceptionHandler(AccessDeniedException.class)
-	// public ResponseEntity<?> handleAccessDeniedException(AccessDeniedException
-	// ex, HttpServletRequest request) {
-	// ErrorResponse errorResponse = new ErrorResponse(
-	// HttpStatus.FORBIDDEN.value(),
-	// "Access denied",
-	// LocalDateTime.now(),
-	// request.getRequestURI());
-	// return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
+	// public ResponseEntity<?> handleAccessDeniedException(AccessDeniedException ex, HttpServletRequest request) {
+	// 	ErrorResponse errorResponse = new ErrorResponse(
+	// 			HttpStatus.FORBIDDEN.value(),
+	// 			"Access denied",
+	// 			LocalDateTime.now(),
+	// 			request.getRequestURI());
+	// 	return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
 	// }
 }

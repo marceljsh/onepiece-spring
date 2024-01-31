@@ -13,10 +13,8 @@
 package com.marceljsh.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
-import com.marceljsh.exceptions.ResourceNotFoundException;
 import com.marceljsh.models.entities.Region;
 import com.marceljsh.models.repos.RegionRepo;
 
@@ -70,7 +68,7 @@ public class RegionService {
 	 *                                   not found.
 	 */
 	public Region findOne(Long id) {
-		return regionRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("region fruit not found"));
+		return regionRepo.findById(id).get();
 	}
 
 	/**
@@ -124,11 +122,8 @@ public class RegionService {
 	 *                                           not found.
 	 */
 	public Region alter(Long id, Region region) {
-		Region regionToAlter = regionRepo.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("region not found"));
-
+		Region regionToAlter = regionRepo.findById(id).get();
 		regionToAlter.setName(region.getName());
-
 		return regionRepo.save(regionToAlter);
 	}
 

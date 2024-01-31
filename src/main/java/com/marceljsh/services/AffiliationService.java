@@ -13,19 +13,21 @@
 package com.marceljsh.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
-import com.marceljsh.models.entities.DevilFruitType;
-import com.marceljsh.models.repos.DevilFruitTypeRepo;
+import com.marceljsh.exceptions.ResourceNotFoundException;
+import com.marceljsh.models.entities.Affiliation;
+import com.marceljsh.models.repos.AffiliationRepo;
 
 import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
-public class DevilFruitTypeService {
+public class AffiliationService {
 
 	@Autowired
-	private DevilFruitTypeRepo devilFruitTypeRepo;
+	private AffiliationRepo affiliationRepo;
 
 	/**
 	 * Saves a given entity. Use the returned instance for further operations as the
@@ -49,8 +51,8 @@ public class DevilFruitTypeService {
 	 *                                           present but does not exist in the
 	 *                                           database.
 	 */
-	public DevilFruitType save(DevilFruitType devilFruitType) {
-		return devilFruitTypeRepo.save(devilFruitType);
+	public Affiliation save(Affiliation affiliation) {
+		return affiliationRepo.save(affiliation);
 	}
 
 	/**
@@ -63,14 +65,16 @@ public class DevilFruitTypeService {
 	 * 
 	 * @throws IllegalArgumentException  if {@literal id} is {@literal null}.
 	 * 
-	 * @throws ResourceNotFoundException in case the given {@link target entity} is
+	 * @throws ResourceNotFoundException in case the given {@link target
+	 *                                   entity} is {@literal null} a.k.a
+	 *                                   not found.
 	 */
-	public DevilFruitType findOne(Long id) {
-		return devilFruitTypeRepo.findById(id).get();
+	public Affiliation findOne(Long id) {
+		return affiliationRepo.findById(id).get();
 	}
 
 	/**
-	 * Returns all instances of the type {@code DevilFruitType} with the given IDs.
+	 * Returns all instances of the type {@code DevilFruit} with the given IDs.
 	 * <p>
 	 * If some or all ids are not found, no entities are returned for these IDs.
 	 * <p>
@@ -78,17 +82,19 @@ public class DevilFruitTypeService {
 	 *
 	 * @param ids must not be {@literal null} nor contain any {@literal null}
 	 *            values.
+	 * 
 	 * @return guaranteed to be not {@literal null}. The size can be equal or less
 	 *         than the number of given
 	 *         {@literal ids}.
+	 * 
 	 * @throws IllegalArgumentException in case the given {@link Iterable ids} or
 	 *                                  one of its items is {@literal null}.
 	 */
-	public Iterable<DevilFruitType> find(String keyword) {
+	public Iterable<Affiliation> find(String keyword) {
 		if (keyword != null) {
-			return devilFruitTypeRepo.findByNameContains(keyword);
+			return affiliationRepo.findByNameContains(keyword);
 		} else {
-			return devilFruitTypeRepo.findAll();
+			return affiliationRepo.findAll();
 		}
 	}
 
@@ -117,12 +123,10 @@ public class DevilFruitTypeService {
 	 *                                           entity} is {@literal null} a.k.a
 	 *                                           not found.
 	 */
-	public DevilFruitType alter(Long id, DevilFruitType devilFruitType) {
-		DevilFruitType devilFruitTypeToAlter = devilFruitTypeRepo.findById(id).get();
-
-		devilFruitTypeToAlter.setName(devilFruitType.getName());
-
-		return devilFruitTypeRepo.save(devilFruitTypeToAlter);
+	public Affiliation alter(Long id, Affiliation affiliation) {
+		Affiliation affiliationToAlter = affiliationRepo.findById(id).get();
+		affiliationToAlter.setName(affiliation.getName());
+		return affiliationRepo.save(affiliationToAlter);
 	}
 
 	/**
@@ -136,6 +140,6 @@ public class DevilFruitTypeService {
 	 *                                  {@literal null}
 	 */
 	public void remove(Long id) {
-		devilFruitTypeRepo.deleteById(id);
+		affiliationRepo.deleteById(id);
 	}
 }

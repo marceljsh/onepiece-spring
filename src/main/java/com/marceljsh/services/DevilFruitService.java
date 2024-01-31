@@ -13,10 +13,8 @@
 package com.marceljsh.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
-import com.marceljsh.exceptions.ResourceNotFoundException;
 import com.marceljsh.models.entities.DevilFruit;
 import com.marceljsh.models.repos.DevilFruitRepo;
 
@@ -70,8 +68,7 @@ public class DevilFruitService {
 	 */
 	public DevilFruit findOne(Long id) {
 		return devilFruitRepo
-				.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("devil fruit not found"));
+				.findById(id).get();
 	}
 
 	/**
@@ -126,8 +123,7 @@ public class DevilFruitService {
 	 */
 	public DevilFruit alter(Long id, DevilFruit devilFruit) {
 		DevilFruit devilFruitToAlter = devilFruitRepo
-				.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("devil fruit not found"));
+				.findById(id).get();
 
 		devilFruitToAlter.setName(devilFruit.getName());
 		devilFruitToAlter.setEnglishName(devilFruit.getEnglishName());

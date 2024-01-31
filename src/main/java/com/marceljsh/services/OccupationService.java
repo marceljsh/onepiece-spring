@@ -13,10 +13,8 @@
 package com.marceljsh.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
-import com.marceljsh.exceptions.ResourceNotFoundException;
 import com.marceljsh.models.entities.Occupation;
 import com.marceljsh.models.repos.OccupationRepo;
 
@@ -70,7 +68,7 @@ public class OccupationService {
 	 *                                   not found.
 	 */
 	public Occupation findOne(Long id) {
-		return occupationRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("occupation not found"));
+		return occupationRepo.findById(id).get();
 	}
 
 	/**
@@ -123,8 +121,7 @@ public class OccupationService {
 	 *                                           not found.
 	 */
 	public Occupation alter(Long id, Occupation occupation) {
-		Occupation occupationToAlter = occupationRepo.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("occupation not found"));
+		Occupation occupationToAlter = occupationRepo.findById(id).get();
 
 		occupationToAlter.setName(occupation.getName());
 

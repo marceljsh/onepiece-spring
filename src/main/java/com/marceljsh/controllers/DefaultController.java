@@ -13,6 +13,7 @@
 package com.marceljsh.controllers;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +27,15 @@ import com.marceljsh.common.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
-public class FallbackController {
+public class DefaultController {
 
+	/**
+	 * Handles unknown routes and returns a custom error response.
+	 *
+	 * @param request the HttpServletRequest object representing the incoming
+	 *                request
+	 * @return a ResponseEntity containing the custom error response
+	 */
 	@RequestMapping("/**")
 	@ResponseBody
 	@ResponseStatus(HttpStatus.NOT_FOUND)
@@ -39,5 +47,16 @@ public class FallbackController {
 				request.getRequestURI());
 
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+	}
+
+	/**
+	 * Handles the "/ping" endpoint and returns a map with a message indicating that
+	 * the host is reachable.
+	 *
+	 * @return a map containing the message
+	 */
+	@RequestMapping("/ping")
+	public Map<String, String> ping() {
+		return Map.of("message", "host is reachable");
 	}
 }

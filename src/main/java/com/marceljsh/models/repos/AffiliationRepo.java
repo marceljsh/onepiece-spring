@@ -10,18 +10,14 @@
 // * but please include this copyright notice.
 // **************************************************************************
 
-package com.marceljsh.controllers;
+package com.marceljsh.models.repos;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
-@RestController
-@RequestMapping("/api/ping")
-public class PingController {
+import org.springframework.data.repository.CrudRepository;
 
-	@GetMapping
-	public String ping() {
-		return "Host is reachable.";
-	}
+import com.marceljsh.models.entities.Affiliation;
+
+public interface AffiliationRepo extends CrudRepository<Affiliation, Long> {
+	List<Affiliation> findByNameContains(String keyword);
 }

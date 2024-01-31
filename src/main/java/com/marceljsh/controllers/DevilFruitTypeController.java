@@ -36,28 +36,57 @@ public class DevilFruitTypeController {
 	@Autowired
 	private DevilFruitTypeService devilFruitTypeService;
 
+	/**
+	 * Create a new Devil Fruit Type.
+	 *
+	 * @param devilFruitType The Devil Fruit Type to create.
+	 * @return The created Devil Fruit Type.
+	 */
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody DevilFruitType devilFruitType) {
 		return ResponseEntity.ok().body(devilFruitTypeService.save(devilFruitType));
 	}
 
+	/**
+	 * Get a Devil Fruit Type by ID.
+	 *
+	 * @param id The ID of the Devil Fruit Type.
+	 * @return The Devil Fruit Type with the specified ID.
+	 */
 	@GetMapping("/{id}")
 	public ResponseEntity<?> readOne(@PathVariable("id") Long id) {
-		DevilFruitType devilFruitType = devilFruitTypeService.findOne(id);
-		return ResponseEntity.ok().body(devilFruitType);
+		return ResponseEntity.ok().body(devilFruitTypeService.findOne(id));
 	}
 
+	/**
+	 * Get all Devil Fruit Types.
+	 *
+	 * @param keyword (Optional) A keyword to filter Devil Fruit Types by name.
+	 * @return A list of Devil Fruit Types.
+	 */
 	@GetMapping
 	public ResponseEntity<?> read(@RequestParam(required = false) String keyword) {
-		Iterable<DevilFruitType> devilFruitTypes = devilFruitTypeService.find(keyword);
-		return ResponseEntity.ok().body(devilFruitTypes);
+		return ResponseEntity.ok().body(devilFruitTypeService.find(keyword));
 	}
 
+	/**
+	 * Update a Devil Fruit Type by ID.
+	 *
+	 * @param id             The ID of the Devil Fruit Type to update.
+	 * @param devilFruitType The updated Devil Fruit Type.
+	 * @return The updated Devil Fruit Type.
+	 */
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody DevilFruitType devilFruitType) {
 		return ResponseEntity.ok().body(devilFruitTypeService.alter(id, devilFruitType));
 	}
 
+	/**
+	 * Delete a Devil Fruit Type by ID.
+	 *
+	 * @param id The ID of the Devil Fruit Type to delete.
+	 * @return A message indicating the deletion status.
+	 */
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 		devilFruitTypeService.remove(id);

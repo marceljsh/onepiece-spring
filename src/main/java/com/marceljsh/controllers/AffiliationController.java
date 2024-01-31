@@ -26,70 +26,73 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.marceljsh.models.entities.Occupation;
-import com.marceljsh.services.OccupationService;
+import com.marceljsh.models.entities.Affiliation;
+import com.marceljsh.services.AffiliationService;
 
+/**
+ * Controller class for managing affiliations.
+ */
 @RestController
-@RequestMapping("/api/v1/occupations")
-public class OccupationController {
+@RequestMapping("/api/v1/affiliations")
+public class AffiliationController {
 
 	@Autowired
-	private OccupationService occupationService;
+	private AffiliationService affiliationService;
 
 	/**
-	 * Create a new occupation.
+	 * Create a new affiliation.
 	 *
-	 * @param occupation The occupation object to be created.
-	 * @return ResponseEntity with the created occupation.
+	 * @param affiliation The affiliation object to be created.
+	 * @return The ResponseEntity with the created affiliation.
 	 */
 	@PostMapping
-	public ResponseEntity<?> create(@RequestBody Occupation occupation) {
-		return ResponseEntity.ok(occupationService.save(occupation));
+	public ResponseEntity<?> create(@RequestBody Affiliation affiliation) {
+		return ResponseEntity.ok(affiliationService.save(affiliation));
 	}
 
 	/**
-	 * Get a specific occupation by its ID.
+	 * Read a specific affiliation by its ID.
 	 *
-	 * @param id The ID of the occupation to retrieve.
-	 * @return ResponseEntity with the requested occupation.
+	 * @param id The ID of the affiliation to be read.
+	 * @return The ResponseEntity with the requested affiliation.
 	 */
 	@GetMapping("/{id}")
 	public ResponseEntity<?> readOne(@PathVariable Long id) {
-		return ResponseEntity.ok(occupationService.findOne(id));
+		return ResponseEntity.ok(affiliationService.findOne(id));
 	}
 
 	/**
-	 * Get a list of occupations.
+	 * Read all affiliations.
 	 *
-	 * @param keyword (optional) A keyword to filter the occupations.
-	 * @return ResponseEntity with the list of occupations.
+	 * @param keyword (optional) A keyword to filter affiliations by.
+	 * @return The ResponseEntity with the list of affiliations.
 	 */
 	@GetMapping
 	public ResponseEntity<?> read(@RequestParam(required = false) String keyword) {
-		return ResponseEntity.ok(occupationService.find(keyword));
+		return ResponseEntity.ok(affiliationService.find(keyword));
 	}
 
 	/**
-	 * Update an existing occupation.
+	 * Update an existing affiliation.
 	 *
-	 * @param id         The ID of the occupation to update.
-	 * @param occupation The updated occupation object.
-	 * @return ResponseEntity with the updated occupation.
+	 * @param id          The ID of the affiliation to be updated.
+	 * @param affiliation The updated affiliation object.
+	 * @return The ResponseEntity with the updated affiliation.
 	 */
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Occupation occupation) {
-		return ResponseEntity.ok(occupationService.alter(id, occupation));
+	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Affiliation affiliation) {
+		return ResponseEntity.ok(affiliationService.alter(id, affiliation));
 	}
 
 	/**
-	 * Delete an occupation by its ID.
+	 * Delete an affiliation by its ID.
 	 *
-	 * @param id The ID of the occupation to delete.
-	 * @return ResponseEntity with a success message.
+	 * @param id The ID of the affiliation to be deleted.
+	 * @return The ResponseEntity with a success message.
 	 */
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable Long id) {
-		occupationService.remove(id);
-		return ResponseEntity.ok().body(Map.of("message", "occupation deleted successfully"));
+		affiliationService.remove(id);
+		return ResponseEntity.ok(Map.of("message", "affiliation deleted successfully"));
 	}
 }
