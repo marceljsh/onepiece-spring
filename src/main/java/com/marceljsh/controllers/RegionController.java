@@ -52,9 +52,9 @@ public class RegionController {
 
 		} catch (IllegalArgumentException e) {
 			ErrorResponse errorResponse = new ErrorResponse(
-					LocalDateTime.now(),
 					HttpStatus.BAD_REQUEST.value(),
 					e.getMessage(),
+					LocalDateTime.now(),
 					request.getRequestURI());
 
 			return ResponseEntity.badRequest().body(errorResponse);
@@ -69,18 +69,18 @@ public class RegionController {
 
 		} catch (NumberFormatException e) {
 			ErrorResponse errorResponse = new ErrorResponse(
-					LocalDateTime.now(),
 					HttpStatus.BAD_REQUEST.value(),
 					"region id must be numeric",
+					LocalDateTime.now(),
 					request.getRequestURI());
 
 			return ResponseEntity.badRequest().body(errorResponse);
 
 		} catch (ResourceNotFoundException e) {
 			ErrorResponse errorResponse = new ErrorResponse(
-					LocalDateTime.now(),
 					HttpStatus.NOT_FOUND.value(),
 					e.getMessage(),
+					LocalDateTime.now(),
 					request.getRequestURI());
 
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
@@ -93,9 +93,9 @@ public class RegionController {
 			return ResponseEntity.ok(regionService.find(keyword));
 		} catch (IllegalArgumentException e) {
 			ErrorResponse errorResponse = new ErrorResponse(
-					LocalDateTime.now(),
 					HttpStatus.BAD_REQUEST.value(),
 					e.getMessage(),
+					LocalDateTime.now(),
 					request.getRequestURI());
 
 			return ResponseEntity.badRequest().body(errorResponse);
@@ -112,18 +112,18 @@ public class RegionController {
 
 		} catch (NumberFormatException e) {
 			ErrorResponse errorResponse = new ErrorResponse(
-					LocalDateTime.now(),
 					HttpStatus.BAD_REQUEST.value(),
 					"region id must be numeric",
+					LocalDateTime.now(),
 					request.getRequestURI());
 
 			return ResponseEntity.badRequest().body(errorResponse);
 
 		} catch (ResourceNotFoundException e) {
 			ErrorResponse errorResponse = new ErrorResponse(
-					LocalDateTime.now(),
 					HttpStatus.NOT_FOUND.value(),
 					e.getMessage(),
+					LocalDateTime.now(),
 					request.getRequestURI());
 
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
@@ -140,18 +140,18 @@ public class RegionController {
 
 		} catch (NumberFormatException e) {
 			ErrorResponse errorResponse = new ErrorResponse(
-					LocalDateTime.now(),
 					HttpStatus.BAD_REQUEST.value(),
 					"region id must be numeric",
+					LocalDateTime.now(),
 					request.getRequestURI());
 
 			return ResponseEntity.badRequest().body(errorResponse);
 
 		} catch (ResourceNotFoundException e) {
 			ErrorResponse errorResponse = new ErrorResponse(
-					LocalDateTime.now(),
 					HttpStatus.NOT_FOUND.value(),
 					e.getMessage(),
+					LocalDateTime.now(),
 					request.getRequestURI());
 
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);

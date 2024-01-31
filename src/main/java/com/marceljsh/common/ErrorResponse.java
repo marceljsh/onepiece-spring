@@ -15,15 +15,15 @@ package com.marceljsh.common;
 import java.time.LocalDateTime;
 
 public class ErrorResponse {
-	private LocalDateTime timestamp;
 	private int status;
 	private String error;
+	private LocalDateTime timestamp;
 	private String path;
 
-	public ErrorResponse(LocalDateTime timestamp, int status, String error, String path) {
-		this.timestamp = timestamp;
+	public ErrorResponse(int status, String error, LocalDateTime timestamp, String path) {
 		this.status = status;
 		this.error = error;
+		this.timestamp = timestamp;
 		this.path = path;
 	}
 

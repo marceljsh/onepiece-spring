@@ -31,7 +31,7 @@ public class Occupation implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(length = 32, name = "name")
+	@Column(length = 64, name = "name", unique = true)
 	private String name;
 
 	public Occupation() {

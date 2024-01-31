@@ -33,9 +33,9 @@ public class FallbackController {
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public ResponseEntity<?> handleUnknownRoutes(HttpServletRequest request) {
 		ErrorResponse errorResponse = new ErrorResponse(
-				LocalDateTime.now(),
 				HttpStatus.NOT_FOUND.value(),
 				"bakekok, ga ketemu",
+				LocalDateTime.now(),
 				request.getRequestURI());
 
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);

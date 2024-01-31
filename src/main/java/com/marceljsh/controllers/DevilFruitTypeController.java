@@ -12,10 +12,9 @@
 
 package com.marceljsh.controllers;
 
-import java.time.LocalDateTime;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,12 +26,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.marceljsh.common.ErrorResponse;
-import com.marceljsh.exceptions.ResourceNotFoundException;
 import com.marceljsh.models.entities.DevilFruitType;
 import com.marceljsh.services.DevilFruitTypeService;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/v1/df-types")
@@ -42,48 +37,14 @@ public class DevilFruitTypeController {
 	private DevilFruitTypeService devilFruitTypeService;
 
 	@PostMapping
-	public ResponseEntity<?> create(@RequestBody DevilFruitType devilFruitType, HttpServletRequest request) {
-		try {
-			if (devilFruitType.getName() == null || devilFruitType.getName().trim().isEmpty()) {
-				throw new IllegalArgumentException("devil fruit type name cannot be empty");
-			}
-
-			return ResponseEntity.ok().body(devilFruitTypeService.save(devilFruitType));
-		} catch (IllegalArgumentException e) {
-			ErrorResponse errorResponse = new ErrorResponse(
-					LocalDateTime.now(),
-					HttpStatus.BAD_REQUEST.value(),
-					e.getMessage(),
-					request.getRequestURI());
-
-			return ResponseEntity.badRequest().body(errorResponse);
-		}
+	public ResponseEntity<?> create(@RequestBody DevilFruitType devilFruitType) {
+		return ResponseEntity.ok().body(devilFruitTypeService.save(devilFruitType));
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<?> readOne(@PathVariable("id") String id, HttpServletRequest request) {
-		try {
-			Long numericId = Long.parseLong(id);
-			DevilFruitType devilFruitType = devilFruitTypeService.findOne(numericId);
-
-			return ResponseEntity.ok().body(devilFruitType);
-		} catch (NumberFormatException e) {
-			ErrorResponse errorResponse = new ErrorResponse(
-					LocalDateTime.now(),
-					HttpStatus.BAD_REQUEST.value(),
-					e.getMessage(),
-					request.getRequestURI());
-
-			return ResponseEntity.badRequest().body(errorResponse);
-		} catch (ResourceNotFoundException e) {
-			ErrorResponse errorResponse = new ErrorResponse(
-					LocalDateTime.now(),
-					HttpStatus.NOT_FOUND.value(),
-					e.getMessage(),
-					request.getRequestURI());
-
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-		}
+	public ResponseEntity<?> readOne(@PathVariable("id") Long id) {
+		DevilFruitType devilFruitType = devilFruitTypeService.findOne(id);
+		return ResponseEntity.ok().body(devilFruitType);
 	}
 
 	@GetMapping
@@ -93,50 +54,13 @@ public class DevilFruitTypeController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@PathVariable("id") String id, @RequestBody DevilFruitType devilFruitType,
-			HttpServletRequest request) {
-		try {
-			Long numericId = Long.parseLong(id);
-
-			if (devilFruitType.getName() == null || devilFruitType.getName().trim().isEmpty()) {
-				throw new IllegalArgumentException("devil fruit type name cannot be empty");
-			}
-
-			return ResponseEntity.ok().body(devilFruitTypeService.alter(numericId, devilFruitType));
-		} catch (NumberFormatException e) {
-			ErrorResponse errorResponse = new ErrorResponse(
-					LocalDateTime.now(),
-					HttpStatus.BAD_REQUEST.value(),
-					e.getMessage(),
-					request.getRequestURI());
-
-			return ResponseEntity.badRequest().body(errorResponse);
-		} catch (ResourceNotFoundException e) {
-			ErrorResponse errorResponse = new ErrorResponse(
-					LocalDateTime.now(),
-					HttpStatus.NOT_FOUND.value(),
-					e.getMessage(),
-					request.getRequestURI());
-
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-		}
+	public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody DevilFruitType devilFruitType) {
+		return ResponseEntity.ok().body(devilFruitTypeService.alter(id, devilFruitType));
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(@PathVariable("id") String id, HttpServletRequest request) {
-		try {
-			Long numericId = Long.parseLong(id);
-			devilFruitTypeService.remove(numericId);
-
-			return ResponseEntity.ok().build();
-		} catch (IllegalArgumentException e) {
-			ErrorResponse errorResponse = new ErrorResponse(
-					LocalDateTime.now(),
-					HttpStatus.BAD_REQUEST.value(),
-					e.getMessage(),
-					request.getRequestURI());
-
-			return ResponseEntity.badRequest().body(errorResponse);
-		}
+	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+		devilFruitTypeService.remove(id);
+		return ResponseEntity.ok().body(Map.of("message", "devil fruit type deleted successfully"));
 	}
 }

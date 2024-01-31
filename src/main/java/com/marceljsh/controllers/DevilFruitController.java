@@ -12,24 +12,20 @@
 
 package com.marceljsh.controllers;
 
-import java.time.LocalDateTime;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.marceljsh.common.ErrorResponse;
-import com.marceljsh.exceptions.ResourceNotFoundException;
 import com.marceljsh.models.dto.DevilFruitDTO;
 import com.marceljsh.models.entities.DevilFruit;
 import com.marceljsh.models.entities.DevilFruitType;
 import com.marceljsh.services.DevilFruitService;
 import com.marceljsh.services.DevilFruitTypeService;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,44 +56,29 @@ public class DevilFruitController {
 		return devilFruit;
 	}
 
-	// * API endpoints
+	/**
+	 * Saves a given entity. Use the returned instance for further operations as the
+	 * save operation might have changed the
+	 * entity instance completely.
+	 *
+	 * @param entity must not be {@literal null}.
+	 * @return the saved entity; will never be {@literal null}.
+	 * @throws IllegalArgumentException          in case the given {@literal entity}
+	 *                                           is {@literal null}.
+	 * @throws OptimisticLockingFailureException when the entity uses optimistic
+	 *                                           locking and has a version attribute
+	 *                                           with
+	 *                                           a different value from that found
+	 *                                           in the persistence store. Also
+	 *                                           thrown if the entity is assumed to
+	 *                                           be
+	 *                                           present but does not exist in the
+	 *                                           database.
+	 */
 	@PostMapping
-	public ResponseEntity<?> create(@RequestBody DevilFruitDTO devilFruitDTO, HttpServletRequest request) {
-		try {
-			if (devilFruitDTO.getDevilFruitTypeId() == null) {
-				throw new IllegalArgumentException("devil fruit type id cannot be empty");
-			}
-
-			if (devilFruitDTO.getName() == null || devilFruitDTO.getName().trim().isEmpty()) {
-				throw new IllegalArgumentException("devil fruit name cannot be empty");
-			}
-
-			if (devilFruitDTO.getEnglishName() == null || devilFruitDTO.getEnglishName().trim().isEmpty()) {
-				throw new IllegalArgumentException("devil fruit english name cannot be empty");
-			}
-
-			DevilFruit devilFruit = convertToDevilFruit(devilFruitDTO);
-
-			return ResponseEntity.ok().body(devilFruitService.save(devilFruit));
-
-		} catch (IllegalArgumentException e) {
-			ErrorResponse errorResponse = new ErrorResponse(
-					LocalDateTime.now(),
-					HttpStatus.BAD_REQUEST.value(),
-					e.getMessage(),
-					request.getRequestURI());
-
-			return ResponseEntity.badRequest().body(errorResponse);
-
-		} catch (ResourceNotFoundException e) {
-			ErrorResponse errorResponse = new ErrorResponse(
-					LocalDateTime.now(),
-					HttpStatus.NOT_FOUND.value(),
-					e.getMessage(),
-					request.getRequestURI());
-
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-		}
+	public ResponseEntity<?> create(@RequestBody DevilFruitDTO devilFruitDTO) {
+		DevilFruit devilFruit = convertToDevilFruit(devilFruitDTO);
+		return ResponseEntity.ok().body(devilFruitService.save(devilFruit));
 	}
 
 	/**
@@ -111,107 +92,26 @@ public class DevilFruitController {
 	 *         response.
 	 */
 	@GetMapping("/{id}")
-	public ResponseEntity<?> readOne(@PathVariable("id") String id, HttpServletRequest request) {
-		try {
-			Long numericId = Long.parseLong(id);
-			DevilFruit devilFruit = devilFruitService.findOne(numericId);
-
-			return ResponseEntity.ok().body(devilFruit);
-
-		} catch (NumberFormatException e) {
-			ErrorResponse errorResponse = new ErrorResponse(
-					LocalDateTime.now(),
-					HttpStatus.BAD_REQUEST.value(),
-					"devil fruit id must be numeric",
-					request.getRequestURI());
-
-			return ResponseEntity.badRequest().body(errorResponse);
-
-		} catch (ResourceNotFoundException e) {
-			ErrorResponse errorResponse = new ErrorResponse(
-					LocalDateTime.now(),
-					HttpStatus.NOT_FOUND.value(),
-					e.getMessage(),
-					request.getRequestURI());
-
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-		}
+	public ResponseEntity<?> readOne(@PathVariable("id") Long id) {
+		DevilFruit devilFruit = devilFruitService.findOne(id);
+		return ResponseEntity.ok().body(devilFruit);
 	}
 
 	@GetMapping
-	public ResponseEntity<?> read(@RequestParam(required = false) String keyword, HttpServletRequest request) {
-		try {
-			return ResponseEntity.ok().body(devilFruitService.find(keyword));
-
-		} catch (IllegalArgumentException e) {
-			ErrorResponse errorResponse = new ErrorResponse(
-					LocalDateTime.now(),
-					HttpStatus.BAD_REQUEST.value(),
-					e.getMessage(),
-					request.getRequestURI());
-
-			return ResponseEntity.badRequest().body(errorResponse);
-		}
+	public ResponseEntity<?> read(@RequestParam(required = false) String keyword) {
+		return ResponseEntity.ok().body(devilFruitService.find(keyword));
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@PathVariable("id") String id, @RequestBody DevilFruitDTO devilFruitDTO,
-			HttpServletRequest request) {
-		try {
-			if (devilFruitDTO.getDevilFruitTypeId() == null) {
-				throw new IllegalArgumentException("devil fruit type id cannot be empty");
-			}
-
-			if (devilFruitDTO.getName() == null || devilFruitDTO.getName().trim().isEmpty()) {
-				throw new IllegalArgumentException("devil fruit name cannot be empty");
-			}
-
-			if (devilFruitDTO.getEnglishName() == null || devilFruitDTO.getEnglishName().trim().isEmpty()) {
-				throw new IllegalArgumentException("devil fruit english name cannot be empty");
-			}
-
-			DevilFruit devilFruit = convertToDevilFruit(devilFruitDTO);
-			Long numericId = Long.parseLong(id);
-			DevilFruit result = devilFruitService.alter(numericId, devilFruit);
-
-			return ResponseEntity.ok().body(result);
-
-		} catch (IllegalArgumentException e) {
-			ErrorResponse errorResponse = new ErrorResponse(
-					LocalDateTime.now(),
-					HttpStatus.BAD_REQUEST.value(),
-					e.getMessage(),
-					request.getRequestURI());
-
-			return ResponseEntity.badRequest().body(errorResponse);
-
-		} catch (ResourceNotFoundException e) {
-			ErrorResponse errorResponse = new ErrorResponse(
-					LocalDateTime.now(),
-					HttpStatus.NOT_FOUND.value(),
-					e.getMessage(),
-					request.getRequestURI());
-
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-		}
+	public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody DevilFruitDTO devilFruitDTO) {
+		DevilFruit devilFruit = convertToDevilFruit(devilFruitDTO);
+		DevilFruit result = devilFruitService.alter(id, devilFruit);
+		return ResponseEntity.ok().body(result);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(@PathVariable("id") String id, HttpServletRequest request) {
-		try {
-			Long numericId = Long.parseLong(id);
-			devilFruitService.remove(numericId);
-
-			return ResponseEntity.ok().body("devil fruit deleted successfully");
-
-		} catch (IllegalArgumentException e) {
-			ErrorResponse errorResponse = new ErrorResponse(
-					LocalDateTime.now(),
-					HttpStatus.NOT_FOUND.value(),
-					e.getMessage(),
-					request.getRequestURI());
-
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-		}
+	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+		devilFruitService.remove(id);
+		return ResponseEntity.ok().body(Map.of("message", "devil fruit deleted successfully"));
 	}
 }
