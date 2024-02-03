@@ -29,9 +29,20 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-// TODO: configure constructors
 @Entity
+@Setter
+@Getter
+@EqualsAndHashCode(of = "id")
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "figures")
 public class Figure implements Serializable {
 
@@ -106,158 +117,4 @@ public class Figure implements Serializable {
 	@ManyToMany
 	@JoinTable(name = "figure_current_residences", joinColumns = @JoinColumn(name = "figure_id"), inverseJoinColumns = @JoinColumn(name = "region_id"))
 	private Set<Region> currentResidences = new HashSet<>();
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getBirthName() {
-		return birthName;
-	}
-
-	public void setBirthName(String birthName) {
-		this.birthName = birthName;
-	}
-
-	public String getEpithet() {
-		return epithet;
-	}
-
-	public void setEpithet(String epithet) {
-		this.epithet = epithet;
-	}
-
-	public String getBirthDay() {
-		return birthDay;
-	}
-
-	public void setBirthDay(String birthDay) {
-		this.birthDay = birthDay;
-	}
-
-	public Region getOrigin() {
-		return origin;
-	}
-
-	public void setOrigin(Region origin) {
-		this.origin = origin;
-	}
-
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-
-	public Integer getAge() {
-		return age;
-	}
-
-	public void setAge(Integer age) {
-		this.age = age;
-	}
-
-	public Integer getHeight() {
-		return height;
-	}
-
-	public void setHeight(Integer height) {
-		this.height = height;
-	}
-
-	public Long getBounty() {
-		return bounty;
-	}
-
-	public void setBounty(Long bounty) {
-		this.bounty = bounty;
-	}
-
-	public Boolean getHasBusoshoku() {
-		return hasBusoshoku;
-	}
-
-	public void setHasBusoshoku(Boolean hasBusoshoku) {
-		this.hasBusoshoku = hasBusoshoku;
-	}
-
-	public Boolean getHasKenbunshoku() {
-		return hasKenbunshoku;
-	}
-
-	public void setHasKenbunshoku(Boolean hasKenbunshoku) {
-		this.hasKenbunshoku = hasKenbunshoku;
-	}
-
-	public Boolean getHasHaoshoku() {
-		return hasHaoshoku;
-	}
-
-	public void setHasHaoshoku(Boolean hasHaoshoku) {
-		this.hasHaoshoku = hasHaoshoku;
-	}
-
-	public Set<DevilFruit> getDevilFruits() {
-		return devilFruits;
-	}
-
-	public void setDevilFruits(Set<DevilFruit> devilFruits) {
-		this.devilFruits = devilFruits;
-	}
-
-	public Set<Affiliation> getFormerAffiliations() {
-		return formerAffiliations;
-	}
-
-	public void setFormerAffiliations(Set<Affiliation> formerAffiliations) {
-		this.formerAffiliations = formerAffiliations;
-	}
-
-	public Set<Affiliation> getCurrentAffiliations() {
-		return currentAffiliations;
-	}
-
-	public void setCurrentAffiliations(Set<Affiliation> currentAffiliations) {
-		this.currentAffiliations = currentAffiliations;
-	}
-
-	public Set<Occupation> getFormerOccupations() {
-		return formerOccupations;
-	}
-
-	public void setFormerOccupations(Set<Occupation> formerOccupations) {
-		this.formerOccupations = formerOccupations;
-	}
-
-	public Set<Occupation> getCurrentOccupations() {
-		return currentOccupations;
-	}
-
-	public void setCurrentOccupations(Set<Occupation> currentOccupations) {
-		this.currentOccupations = currentOccupations;
-	}
-
-	public Set<Region> getFormerResidences() {
-		return formerResidences;
-	}
-
-	public void setFormerResidences(Set<Region> formerResidences) {
-		this.formerResidences = formerResidences;
-	}
-
-	public Set<Region> getCurrentResidences() {
-		return currentResidences;
-	}
-
-	public void setCurrentResidences(Set<Region> currentResidences) {
-		this.currentResidences = currentResidences;
-	}
-
-	
 }
