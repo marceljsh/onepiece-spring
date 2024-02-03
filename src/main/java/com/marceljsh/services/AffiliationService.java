@@ -12,6 +12,7 @@
 
 package com.marceljsh.services;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
@@ -124,7 +125,7 @@ public class AffiliationService {
 	 */
 	public Affiliation alter(Long id, Affiliation affiliation) {
 		Affiliation affiliationToAlter = affiliationRepo.findById(id).get();
-		affiliationToAlter.setName(affiliation.getName());
+		BeanUtils.copyProperties(affiliation, affiliationToAlter, "id");
 		return affiliationRepo.save(affiliationToAlter);
 	}
 

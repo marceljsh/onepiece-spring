@@ -124,9 +124,7 @@ public class FigureService {
 	 */
 	public Figure alter(Long id, Figure figure) {
 		Figure figureToAlter = figureRepo.findById(id).get();
-
 		BeanUtils.copyProperties(figure, figureToAlter, "id");
-
 		return figureRepo.save(figureToAlter);
 	}
 

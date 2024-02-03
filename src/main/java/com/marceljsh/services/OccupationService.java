@@ -12,6 +12,7 @@
 
 package com.marceljsh.services;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -122,9 +123,7 @@ public class OccupationService {
 	 */
 	public Occupation alter(Long id, Occupation occupation) {
 		Occupation occupationToAlter = occupationRepo.findById(id).get();
-
-		occupationToAlter.setName(occupation.getName());
-
+		BeanUtils.copyProperties(occupation, occupationToAlter, "id");
 		return occupationRepo.save(occupationToAlter);
 	}
 

@@ -12,6 +12,7 @@
 
 package com.marceljsh.services;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -122,7 +123,7 @@ public class RegionService {
 	 */
 	public Region alter(Long id, Region region) {
 		Region regionToAlter = regionRepo.findById(id).get();
-		regionToAlter.setName(region.getName());
+		BeanUtils.copyProperties(region, regionToAlter, "id");
 		return regionRepo.save(regionToAlter);
 	}
 

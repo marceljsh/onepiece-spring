@@ -12,6 +12,7 @@
 
 package com.marceljsh.services;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -118,9 +119,7 @@ public class DevilFruitTypeService {
 	 */
 	public DevilFruitType alter(Long id, DevilFruitType devilFruitType) {
 		DevilFruitType devilFruitTypeToAlter = devilFruitTypeRepo.findById(id).get();
-
-		devilFruitTypeToAlter.setName(devilFruitType.getName());
-
+		BeanUtils.copyProperties(devilFruitType, devilFruitTypeToAlter, "id");
 		return devilFruitTypeRepo.save(devilFruitTypeToAlter);
 	}
 
