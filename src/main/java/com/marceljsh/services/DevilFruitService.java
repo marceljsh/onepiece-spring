@@ -67,8 +67,7 @@ public class DevilFruitService {
 	 *                                   {@literal null} a.k.a not found.
 	 */
 	public DevilFruit findOne(Long id) {
-		return devilFruitRepo
-				.findById(id).get();
+		return devilFruitRepo.findById(id).get();
 	}
 
 	/**
@@ -91,9 +90,8 @@ public class DevilFruitService {
 	public Iterable<DevilFruit> find(String keyword) {
 		if (keyword != null) {
 			return devilFruitRepo.findByKeyword(keyword);
-		} else {
-			return devilFruitRepo.findAll();
 		}
+		return devilFruitRepo.findAll();
 	}
 
 	/**
@@ -122,8 +120,7 @@ public class DevilFruitService {
 	 *                                           not found.
 	 */
 	public DevilFruit alter(Long id, DevilFruit devilFruit) {
-		DevilFruit devilFruitToAlter = devilFruitRepo
-				.findById(id).get();
+		DevilFruit devilFruitToAlter = devilFruitRepo.findById(id).get();
 
 		devilFruitToAlter.setName(devilFruit.getName());
 		devilFruitToAlter.setEnglishName(devilFruit.getEnglishName());

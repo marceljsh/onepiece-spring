@@ -93,9 +93,8 @@ public class AffiliationService {
 	public Iterable<Affiliation> find(String keyword) {
 		if (keyword != null) {
 			return affiliationRepo.findByNameContains(keyword);
-		} else {
-			return affiliationRepo.findAll();
 		}
+		return affiliationRepo.findAll();
 	}
 
 	/**

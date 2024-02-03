@@ -91,9 +91,8 @@ public class RegionService {
 	public Iterable<Region> find(String keyword) {
 		if (keyword != null) {
 			return regionRepo.findByNameContains(keyword);
-		} else {
-			return regionRepo.findAll();
 		}
+		return regionRepo.findAll();
 	}
 
 	/**
