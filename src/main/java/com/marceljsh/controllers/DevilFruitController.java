@@ -44,18 +44,6 @@ public class DevilFruitController {
 	@Autowired
 	private DevilFruitTypeService devilFruitTypeService;
 
-	// * helper method
-	public DevilFruit convertToDevilFruit(DevilFruitDTO devilFruitDTO) {
-		DevilFruit devilFruit = new DevilFruit();
-		DevilFruitType devilFruitType = devilFruitTypeService.findOne(devilFruitDTO.getDevilFruitTypeId());
-
-		devilFruit.setName(devilFruitDTO.getName());
-		devilFruit.setEnglishName(devilFruitDTO.getEnglishName());
-		devilFruit.setDevilFruitType(devilFruitType);
-
-		return devilFruit;
-	}
-
 	/**
 	 * Saves a given entity. Use the returned instance for further operations as the
 	 * save operation might have changed the entity instance completely.
@@ -131,5 +119,17 @@ public class DevilFruitController {
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 		devilFruitService.remove(id);
 		return ResponseEntity.ok().body(Map.of("message", "devil fruit deleted successfully"));
+	}
+
+	// * helper method
+	public DevilFruit convertToDevilFruit(DevilFruitDTO devilFruitDTO) {
+		DevilFruit devilFruit = new DevilFruit();
+		DevilFruitType devilFruitType = devilFruitTypeService.findOne(devilFruitDTO.getDevilFruitTypeId());
+
+		devilFruit.setName(devilFruitDTO.getName());
+		devilFruit.setEnglishName(devilFruitDTO.getEnglishName());
+		devilFruit.setDevilFruitType(devilFruitType);
+
+		return devilFruit;
 	}
 }
