@@ -16,11 +16,12 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -47,7 +48,12 @@ import lombok.ToString;
 public class Figure implements Serializable {
 
 	public enum Status {
-		ALIVE, DECEASED, UNKNOWN
+		ALIVE, DECEASED, UNKNOWN;
+
+		@JsonValue
+		public String toJson() {
+			return name().toLowerCase();
+		}
 	}
 
 	private static final long serialVersionUID = 1L;
@@ -65,7 +71,7 @@ public class Figure implements Serializable {
 	@Column(length = 16, name = "birth_day")
 	private String birthDay;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "origin_id")
 	private Region origin;
 
