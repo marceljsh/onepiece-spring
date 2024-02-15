@@ -15,6 +15,7 @@ package com.marceljsh.controllers;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,8 +66,10 @@ public class RegionController {
 	 * @return ResponseEntity with the list of regions.
 	 */
 	@GetMapping
-	public ResponseEntity<?> read(@RequestParam(required = false) String keyword) {
-		return ResponseEntity.ok(regionService.find(keyword));
+	public ResponseEntity<?> read(@RequestParam(required = false) String keyword,
+			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+		Pageable pageable = Pageable.ofSize(size).withPage(page);
+		return ResponseEntity.ok(regionService.find(keyword, pageable));
 	}
 
 	/**

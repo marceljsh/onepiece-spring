@@ -14,6 +14,8 @@ package com.marceljsh.services;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.marceljsh.models.entities.Region;
@@ -89,11 +91,11 @@ public class RegionService {
 	 * @throws IllegalArgumentException in case the given {@link Iterable ids} or
 	 *                                  one of its items is {@literal null}.
 	 */
-	public Iterable<Region> find(String keyword) {
-		if (keyword != null) {
-			return regionRepo.findByNameContains(keyword);
+	public Page<Region> find(String keyword, Pageable pageable) {
+		if (keyword != null && !keyword.trim().isEmpty()) {
+			return regionRepo.findByNameContains(keyword, pageable);
 		}
-		return regionRepo.findAll();
+		return regionRepo.findAll(pageable);
 	}
 
 	/**

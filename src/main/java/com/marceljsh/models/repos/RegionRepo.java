@@ -12,12 +12,12 @@
 
 package com.marceljsh.models.repos;
 
-import java.util.List;
-
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.marceljsh.models.entities.Region;
 
-public interface RegionRepo extends CrudRepository<Region, Long> {
-	List<Region> findByNameContains(String keyword);
+public interface RegionRepo extends JpaRepository<Region, Long> {
+	Page<Region> findByNameContains(String keyword, Pageable pageable);
 }
