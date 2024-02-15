@@ -31,8 +31,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.marceljsh.model.dto.FigureDTO;
-import com.marceljsh.model.entities.Figure;
-import com.marceljsh.model.entities.Figure.Status;
+import com.marceljsh.model.entity.Figure;
+import com.marceljsh.model.entity.Figure.Status;
 import com.marceljsh.service.AffiliationService;
 import com.marceljsh.service.DevilFruitService;
 import com.marceljsh.service.FigureService;

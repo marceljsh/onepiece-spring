@@ -10,13 +10,13 @@
 // * but please include this copyright notice.
 // **************************************************************************
 
-package com.marceljsh.model.repos;
+package com.marceljsh.model.repo;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.marceljsh.model.entities.Region;
+import com.marceljsh.model.entity.Region;
 
 public interface RegionRepo extends JpaRepository<Region, Long> {
 	Page<Region> findByNameContains(String keyword, Pageable pageable);

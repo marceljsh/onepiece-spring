@@ -9,7 +9,7 @@
 // * Feel free to use or modify this code for your own purposes,
 // * but please include this copyright notice.
 // **************************************************************************
-package com.marceljsh.model.entities;
+package com.marceljsh.model.entity;
 
 import java.io.Serializable;
 

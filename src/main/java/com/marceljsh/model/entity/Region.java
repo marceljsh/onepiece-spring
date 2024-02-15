@@ -10,7 +10,7 @@
 // * but please include this copyright notice.
 // **************************************************************************
 
-package com.marceljsh.model.entities;
+package com.marceljsh.model.entity;
 
 import java.io.Serializable;
 

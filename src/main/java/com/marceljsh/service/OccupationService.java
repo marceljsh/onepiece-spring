@@ -16,8 +16,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.marceljsh.model.entities.Occupation;
-import com.marceljsh.model.repos.OccupationRepo;
+import com.marceljsh.model.entity.Occupation;
+import com.marceljsh.model.repo.OccupationRepo;
 
 import jakarta.transaction.Transactional;
 

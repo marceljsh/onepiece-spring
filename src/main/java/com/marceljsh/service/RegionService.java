@@ -18,8 +18,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.marceljsh.model.entities.Region;
-import com.marceljsh.model.repos.RegionRepo;
+import com.marceljsh.model.entity.Region;
+import com.marceljsh.model.repo.RegionRepo;
 
 import jakarta.transaction.Transactional;
 

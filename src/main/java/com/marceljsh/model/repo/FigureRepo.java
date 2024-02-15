@@ -10,7 +10,7 @@
 // * but please include this copyright notice.
 // **************************************************************************
 
-package com.marceljsh.model.repos;
+package com.marceljsh.model.repo;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-import com.marceljsh.model.entities.Figure;
+import com.marceljsh.model.entity.Figure;
 
 public interface FigureRepo extends CrudRepository<Figure, Long> {
 	@Query("SELECT f FROM Figure f WHERE lower(f.birthName) LIKE lower(concat('%', :keyword, '%')) OR lower(f.epithet) LIKE lower(concat('%', :keyword, '%'))")

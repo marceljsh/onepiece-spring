@@ -18,8 +18,8 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
 import com.marceljsh.exception.ResourceNotFoundException;
-import com.marceljsh.model.entities.Figure;
-import com.marceljsh.model.repos.FigureRepo;
+import com.marceljsh.model.entity.Figure;
+import com.marceljsh.model.repo.FigureRepo;
 
 import jakarta.transaction.Transactional;
 

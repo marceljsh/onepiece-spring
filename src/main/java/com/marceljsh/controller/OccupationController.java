@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.marceljsh.model.entities.Occupation;
+import com.marceljsh.model.entity.Occupation;
 import com.marceljsh.service.OccupationService;
 
 @RestController

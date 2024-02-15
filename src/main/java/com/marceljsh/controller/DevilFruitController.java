@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.marceljsh.model.dto.DevilFruitDTO;
-import com.marceljsh.model.entities.DevilFruit;
-import com.marceljsh.model.entities.DevilFruitType;
+import com.marceljsh.model.entity.DevilFruit;
+import com.marceljsh.model.entity.DevilFruitType;
 import com.marceljsh.service.DevilFruitService;
 import com.marceljsh.service.DevilFruitTypeService;
 

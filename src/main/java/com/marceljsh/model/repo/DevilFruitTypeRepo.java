@@ -10,13 +10,13 @@
 // * but please include this copyright notice.
 // **************************************************************************
 
-package com.marceljsh.model.repos;
+package com.marceljsh.model.repo;
 
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.marceljsh.model.entities.DevilFruitType;
+import com.marceljsh.model.entity.DevilFruitType;
 
 public interface DevilFruitTypeRepo extends CrudRepository<DevilFruitType, Long> {
 	List<DevilFruitType> findByNameContains(String keyword);

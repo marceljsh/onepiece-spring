@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.marceljsh.model.entities.Region;
+import com.marceljsh.model.entity.Region;
 import com.marceljsh.service.RegionService;
 
 @RestController

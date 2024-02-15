@@ -18,8 +18,8 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
 import com.marceljsh.exception.ResourceNotFoundException;
-import com.marceljsh.model.entities.Affiliation;
-import com.marceljsh.model.repos.AffiliationRepo;
+import com.marceljsh.model.entity.Affiliation;
+import com.marceljsh.model.repo.AffiliationRepo;
 
 import jakarta.transaction.Transactional;
 

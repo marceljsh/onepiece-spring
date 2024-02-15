@@ -10,13 +10,13 @@
 // * but please include this copyright notice.
 // **************************************************************************
 
-package com.marceljsh.model.repos;
+package com.marceljsh.model.repo;
 
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.marceljsh.model.entities.Occupation;
+import com.marceljsh.model.entity.Occupation;
 
 public interface OccupationRepo extends CrudRepository<Occupation, Long> {
 	List<Occupation> findByNameContains(String keyword);

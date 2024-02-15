@@ -16,8 +16,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.marceljsh.model.entities.DevilFruitType;
-import com.marceljsh.model.repos.DevilFruitTypeRepo;
+import com.marceljsh.model.entity.DevilFruitType;
+import com.marceljsh.model.repo.DevilFruitTypeRepo;
 
 import jakarta.transaction.Transactional;
 
