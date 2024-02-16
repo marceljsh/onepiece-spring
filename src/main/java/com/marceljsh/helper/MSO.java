@@ -12,21 +12,24 @@
 
 package com.marceljsh.helper;
 
+import java.util.HashMap;
 import java.util.Map;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+public class MSO {
 
-public class JsonHelper {
-	
-	private static final ObjectMapper mapper = new ObjectMapper();
-
-	public static String createJson(Map<String, Object> data) {
-		try {
-			return mapper.writeValueAsString(data);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-			return "{}";
+	public static Map<String, Object> assemble(Object... keyValuePairs) {
+		if (keyValuePairs.length % 2 != 0) {
+			throw new IllegalArgumentException("some key or value is missing");
 		}
+
+		Map<String, Object> map = new HashMap<>();
+		for (int i = 0; i < keyValuePairs.length; i += 2) {
+			if (!(keyValuePairs[i] instanceof String)) {
+				throw new IllegalArgumentException("key must be a string");
+			}
+			map.put((String) keyValuePairs[i], keyValuePairs[i + 1]);
+		}
+
+		return map;
 	}
 }
