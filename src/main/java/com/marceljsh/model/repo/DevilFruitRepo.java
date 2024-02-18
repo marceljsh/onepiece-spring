@@ -12,17 +12,17 @@
 
 package com.marceljsh.model.repo;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.marceljsh.model.entity.DevilFruit;
 
-public interface DevilFruitRepo extends CrudRepository<DevilFruit, Long> {
+public interface DevilFruitRepo extends JpaRepository<DevilFruit, Long> {
 	// List<DevilFruit> findByNameContains(String keyword);
 
 	@Query("SELECT df FROM DevilFruit df WHERE df.name LIKE %:keyword% OR df.englishName LIKE %:keyword% OR df.devilFruitType.name LIKE %:keyword%")
-	List<DevilFruit> findByKeyword(@Param("keyword") String keyword);
+	Page<DevilFruit> findByKeyword(@Param("keyword") String keyword, Pageable pageable);
 }

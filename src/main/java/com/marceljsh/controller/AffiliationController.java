@@ -15,6 +15,8 @@ package com.marceljsh.controller;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,12 +28,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.marceljsh.helper.Bundler;
 import com.marceljsh.model.entity.Affiliation;
 import com.marceljsh.service.AffiliationService;
 
-/**
- * Controller class for managing affiliations.
- */
 @RestController
 @RequestMapping("/api/v1/affiliations")
 public class AffiliationController {
@@ -68,8 +68,18 @@ public class AffiliationController {
 	 * @return The ResponseEntity with the list of affiliations.
 	 */
 	@GetMapping
-	public ResponseEntity<?> read(@RequestParam(required = false) String keyword) {
-		return ResponseEntity.ok(affiliationService.find(keyword));
+	public ResponseEntity<?> read(@RequestParam(required = false) String keyword,
+			@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size) {
+		Pageable pageable = Pageable.ofSize(size).withPage(page - 1);
+		Page<Affiliation> pageResult = affiliationService.find(keyword, pageable);
+
+		return ResponseEntity.ok(Bundler.pack(
+				"affiliations", pageResult.getContent(),
+				"page_size", pageResult.getSize(),
+				"current_page", pageResult.getNumber() + 1,
+				"total_pages", pageResult.getTotalPages(),
+				"length", pageResult.getNumberOfElements(),
+				"total_elements", pageResult.getTotalElements()));
 	}
 
 	/**

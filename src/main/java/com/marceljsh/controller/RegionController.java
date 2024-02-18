@@ -12,9 +12,8 @@
 
 package com.marceljsh.controller;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.marceljsh.helper.Bundler;
 import com.marceljsh.model.entity.Region;
 import com.marceljsh.service.RegionService;
 
@@ -60,16 +60,27 @@ public class RegionController {
 	}
 
 	/**
-	 * Get all regions or filter regions by keyword.
+	 * Get regions with optional filtering and pagination.
 	 *
-	 * @param keyword (optional) The keyword to filter regions by.
-	 * @return ResponseEntity with the list of regions.
+	 * @param keyword The keyword to filter regions by.
+	 * @param page    The page number for pagination.
+	 * @param size    The number of regions per page.
+	 * @return ResponseEntity with the paginated regions.
 	 */
 	@GetMapping
 	public ResponseEntity<?> read(@RequestParam(required = false) String keyword,
-			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
-		Pageable pageable = Pageable.ofSize(size).withPage(page);
-		return ResponseEntity.ok(regionService.find(keyword, pageable));
+			@RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "10") int size) {
+		Pageable pageable = Pageable.ofSize(size).withPage(page - 1);
+		Page<Region> pageResult = regionService.find(keyword, pageable);
+
+		return ResponseEntity.ok(Bundler.pack(
+				"regions", pageResult.getContent(),
+				"page_size", pageResult.getSize(),
+				"current_page", pageResult.getNumber() + 1,
+				"total_pages", pageResult.getTotalPages(),
+				"length", pageResult.getNumberOfElements(),
+				"total_elements", pageResult.getTotalElements()));
 	}
 
 	/**
@@ -93,6 +104,6 @@ public class RegionController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable Long id) {
 		regionService.remove(id);
-		return ResponseEntity.ok().body(Map.of("message", "region deleted successfully"));
+		return ResponseEntity.ok().body(Bundler.pack("message", "region deleted successfully"));
 	}
 }

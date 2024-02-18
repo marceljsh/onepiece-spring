@@ -19,6 +19,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.marceljsh.helper.Bundler;
 import com.marceljsh.model.dto.FigureDTO;
 import com.marceljsh.model.entity.Figure;
 import com.marceljsh.model.entity.Figure.Status;
@@ -70,8 +73,18 @@ public class FigureController {
 	}
 
 	@GetMapping
-	public ResponseEntity<?> read(@RequestParam(required = false) String keyword) {
-		return ResponseEntity.ok(figureService.find(keyword));
+	public ResponseEntity<?> read(@RequestParam(required = false) String keyword,
+			@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size) {
+		Pageable pageable = Pageable.ofSize(size).withPage(page - 1);
+		Page<Figure> pageResult = figureService.find(keyword, pageable);
+
+		return ResponseEntity.ok(Bundler.pack(
+				"figures", pageResult.getContent(),
+				"page_size", pageResult.getSize(),
+				"current_page", pageResult.getNumber() + 1,
+				"total_pages", pageResult.getTotalPages(),
+				"length", pageResult.getNumberOfElements(),
+				"total_elements", pageResult.getTotalElements()));
 	}
 
 	@PutMapping("/{id}")
@@ -87,6 +100,7 @@ public class FigureController {
 	}
 
 	// * helper methods
+	@SuppressWarnings("null")
 	public Figure convertToFigure(FigureDTO figureDTO) {
 		Figure figure = new Figure();
 

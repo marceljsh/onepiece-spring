@@ -15,6 +15,8 @@ package com.marceljsh.service;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.marceljsh.exception.ResourceNotFoundException;
@@ -52,6 +54,7 @@ public class FigureService {
 	 *                                           present but does not exist in the
 	 *                                           database.
 	 */
+	@SuppressWarnings("null")
 	public Figure save(Figure figure) {
 		return figureRepo.save(figure);
 	}
@@ -69,6 +72,7 @@ public class FigureService {
 	 * @throws ResourceNotFoundException in case the given {@link target entity} is
 	 *                                   {@literal null} a.k.a not found.
 	 */
+	@SuppressWarnings("null")
 	public Figure findOne(Long id) {
 		return figureRepo.findById(id).get();
 	}
@@ -90,11 +94,12 @@ public class FigureService {
 	 * @throws IllegalArgumentException in case the given {@link Iterable ids} or
 	 *                                  one of its items is {@literal null}.
 	 */
-	public Iterable<Figure> find(String keyword) {
+	@SuppressWarnings("null")
+	public Page<Figure> find(String keyword, Pageable pageable) {
 		if (keyword != null) {
-			return figureRepo.findByKeyword(keyword);
+			return figureRepo.findByKeyword(keyword, pageable);
 		}
-		return figureRepo.findAll();
+		return figureRepo.findAll(pageable);
 	}
 
 	/**
@@ -122,6 +127,7 @@ public class FigureService {
 	 *                                           entity} is {@literal null} a.k.a
 	 *                                           not found.
 	 */
+	@SuppressWarnings("null")
 	public Figure alter(Long id, Figure figure) {
 		Figure figureToAlter = figureRepo.findById(id).get();
 		BeanUtils.copyProperties(figure, figureToAlter, "id");
@@ -138,6 +144,7 @@ public class FigureService {
 	 * @throws IllegalArgumentException in case the given {@literal id} is
 	 *                                  {@literal null}
 	 */
+	@SuppressWarnings("null")
 	public void remove(Long id) {
 		figureRepo.deleteById(id);
 	}

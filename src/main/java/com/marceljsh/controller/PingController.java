@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.marceljsh.helper.Bundler;
+
 @RestController
 @RequestMapping("/ping")
 public class PingController {
@@ -16,7 +18,7 @@ public class PingController {
 	 * @return a map containing the message
 	 */
 	@GetMapping
-	public Map<String, String> ping() {
-		return Map.of("message", "host is reachable");
+	public Map<String, Object> ping() {
+		return Bundler.pack("message", "host is reachable");
 	}
 }

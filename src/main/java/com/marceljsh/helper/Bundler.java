@@ -15,9 +15,9 @@ package com.marceljsh.helper;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MSO {
+public class Bundler {
 
-	public static Map<String, Object> assemble(Object... keyValuePairs) {
+	public static Map<String, Object> pack(Object... keyValuePairs) {
 		if (keyValuePairs.length % 2 != 0) {
 			throw new IllegalArgumentException("some key or value is missing");
 		}

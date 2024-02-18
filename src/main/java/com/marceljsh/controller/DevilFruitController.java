@@ -16,11 +16,14 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.marceljsh.helper.Bundler;
 import com.marceljsh.model.dto.DevilFruitDTO;
 import com.marceljsh.model.entity.DevilFruit;
 import com.marceljsh.model.entity.DevilFruitType;
@@ -90,8 +93,18 @@ public class DevilFruitController {
 	 *         response.
 	 */
 	@GetMapping
-	public ResponseEntity<?> read(@RequestParam(required = false) String keyword) {
-		return ResponseEntity.ok().body(devilFruitService.find(keyword));
+	public ResponseEntity<?> read(@RequestParam(required = false) String keyword, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size) {
+		Pageable pageable = Pageable.ofSize(size).withPage(page - 1);
+		Page<DevilFruit> pageResult = devilFruitService.find(keyword, pageable);
+
+		return ResponseEntity.ok(Bundler.pack(
+			"devil_fruits", pageResult.getContent(),
+			"page_size", pageResult.getSize(),
+			"current_page", pageResult.getNumber() + 1,
+			"total_pages", pageResult.getTotalPages(),
+			"length", pageResult.getNumberOfElements(),
+			"total_elements", pageResult.getTotalElements()
+		));
 	}
 
 	/**

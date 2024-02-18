@@ -14,6 +14,8 @@ package com.marceljsh.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.marceljsh.model.entity.Occupation;
@@ -50,6 +52,7 @@ public class OccupationService {
 	 *                                           present but does not exist in the
 	 *                                           database.
 	 */
+	@SuppressWarnings("null")
 	public Occupation save(Occupation occupation) {
 		return occupationRepo.save(occupation);
 	}
@@ -68,6 +71,7 @@ public class OccupationService {
 	 *                                   entity} is {@literal null} a.k.a
 	 *                                   not found.
 	 */
+	@SuppressWarnings("null")
 	public Occupation findOne(Long id) {
 		return occupationRepo.findById(id).get();
 	}
@@ -89,11 +93,12 @@ public class OccupationService {
 	 * @throws IllegalArgumentException in case the given {@link Iterable ids} or
 	 *                                  one of its items is {@literal null}.
 	 */
-	public Iterable<Occupation> find(String keyword) {
-		if (keyword != null) {
-			return occupationRepo.findByNameContains(keyword);
+	@SuppressWarnings("null")
+	public Page<Occupation> find(String keyword, Pageable pageable) {
+		if (keyword != null && !keyword.trim().isEmpty()) {
+			return occupationRepo.findByNameContains(keyword, pageable);
 		}
-		return occupationRepo.findAll();
+		return occupationRepo.findAll(pageable);
 	}
 
 	/**
@@ -121,6 +126,7 @@ public class OccupationService {
 	 *                                           entity} is {@literal null} a.k.a
 	 *                                           not found.
 	 */
+	@SuppressWarnings("null")
 	public Occupation alter(Long id, Occupation occupation) {
 		Occupation occupationToAlter = occupationRepo.findById(id).get();
 		BeanUtils.copyProperties(occupation, occupationToAlter, "id");
@@ -137,6 +143,7 @@ public class OccupationService {
 	 * @throws IllegalArgumentException in case the given {@literal id} is
 	 *                                  {@literal null}
 	 */
+	@SuppressWarnings("null")
 	public void remove(Long id) {
 		occupationRepo.deleteById(id);
 	}

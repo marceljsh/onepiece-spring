@@ -14,6 +14,8 @@ package com.marceljsh.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.marceljsh.model.entity.DevilFruit;
@@ -51,6 +53,9 @@ public class DevilFruitService {
 	 *                                           database.
 	 */
 	public DevilFruit save(DevilFruit devilFruit) {
+		if (devilFruit == null) {
+			throw new IllegalArgumentException("devilFruit cannot be null");
+		}
 		return devilFruitRepo.save(devilFruit);
 	}
 
@@ -67,6 +72,7 @@ public class DevilFruitService {
 	 * @throws ResourceNotFoundException in case the given {@link target entity} is
 	 *                                   {@literal null} a.k.a not found.
 	 */
+	@SuppressWarnings("null")
 	public DevilFruit findOne(Long id) {
 		return devilFruitRepo.findById(id).get();
 	}
@@ -88,11 +94,12 @@ public class DevilFruitService {
 	 * @throws IllegalArgumentException in case the given {@link Iterable ids} or
 	 *                                  one of its items is {@literal null}.
 	 */
-	public Iterable<DevilFruit> find(String keyword) {
-		if (keyword != null) {
-			return devilFruitRepo.findByKeyword(keyword);
+	@SuppressWarnings("null")
+	public Page<DevilFruit> find(String keyword, Pageable pageable) {
+		if (keyword != null && !keyword.trim().isEmpty()) {
+			return devilFruitRepo.findByKeyword(keyword, pageable);
 		}
-		return devilFruitRepo.findAll();
+		return devilFruitRepo.findAll(pageable);
 	}
 
 	/**
@@ -120,6 +127,7 @@ public class DevilFruitService {
 	 *                                           entity} is {@literal null} a.k.a
 	 *                                           not found.
 	 */
+	@SuppressWarnings("null")
 	public DevilFruit alter(Long id, DevilFruit devilFruit) {
 		DevilFruit devilFruitToAlter = devilFruitRepo.findById(id).get();
 		BeanUtils.copyProperties(devilFruit, devilFruitToAlter, "id");
@@ -136,6 +144,7 @@ public class DevilFruitService {
 	 * @throws IllegalArgumentException in case the given {@literal id} is
 	 *                                  {@literal null}
 	 */
+	@SuppressWarnings("null")
 	public void remove(Long id) {
 		devilFruitRepo.deleteById(id);
 	}

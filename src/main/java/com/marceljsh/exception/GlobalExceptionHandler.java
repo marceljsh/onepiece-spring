@@ -34,7 +34,10 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ResponseEntity<?> handleTypeMismatch(MethodArgumentTypeMismatchException ex, HttpServletRequest request) {
-		String error = ex.getName() + " should be of type " + ex.getRequiredType().getName();
+		Class<?> requiredType = ex.getRequiredType();
+		String typeName = requiredType != null ? requiredType.getName() : "unknown type";
+		String error = ex.getName() + " should be of type " + typeName;
+
 		ErrorResponse errorResponse = new ErrorResponse(
 				HttpStatus.BAD_REQUEST.value(),
 				error,
@@ -102,12 +105,13 @@ public class GlobalExceptionHandler {
 	}
 
 	// @ExceptionHandler(AccessDeniedException.class)
-	// public ResponseEntity<?> handleAccessDeniedException(AccessDeniedException ex, HttpServletRequest request) {
-	// 	ErrorResponse errorResponse = new ErrorResponse(
-	// 			HttpStatus.FORBIDDEN.value(),
-	// 			"Access denied",
-	// 			LocalDateTime.now(),
-	// 			request.getRequestURI());
-	// 	return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
+	// public ResponseEntity<?> handleAccessDeniedException(AccessDeniedException
+	// ex, HttpServletRequest request) {
+	// ErrorResponse errorResponse = new ErrorResponse(
+	// HttpStatus.FORBIDDEN.value(),
+	// "Access denied",
+	// LocalDateTime.now(),
+	// request.getRequestURI());
+	// return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
 	// }
 }

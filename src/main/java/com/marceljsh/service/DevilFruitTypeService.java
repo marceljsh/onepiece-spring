@@ -14,6 +14,8 @@ package com.marceljsh.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.marceljsh.model.entity.DevilFruitType;
@@ -50,6 +52,7 @@ public class DevilFruitTypeService {
 	 *                                           present but does not exist in the
 	 *                                           database.
 	 */
+	@SuppressWarnings("null")
 	public DevilFruitType save(DevilFruitType devilFruitType) {
 		return devilFruitTypeRepo.save(devilFruitType);
 	}
@@ -66,6 +69,7 @@ public class DevilFruitTypeService {
 	 * 
 	 * @throws ResourceNotFoundException in case the given {@link target entity} is
 	 */
+	@SuppressWarnings("null")
 	public DevilFruitType findOne(Long id) {
 		return devilFruitTypeRepo.findById(id).get();
 	}
@@ -85,11 +89,12 @@ public class DevilFruitTypeService {
 	 * @throws IllegalArgumentException in case the given {@link Iterable ids} or
 	 *                                  one of its items is {@literal null}.
 	 */
-	public Iterable<DevilFruitType> find(String keyword) {
-		if (keyword != null) {
-			return devilFruitTypeRepo.findByNameContains(keyword);
+	@SuppressWarnings("null")
+	public Page<DevilFruitType> find(String keyword, Pageable pageable) {
+		if (keyword != null && !keyword.trim().isEmpty()) {
+			return devilFruitTypeRepo.findByNameContains(keyword, pageable);
 		}
-		return devilFruitTypeRepo.findAll();
+		return devilFruitTypeRepo.findAll(pageable);
 	}
 
 	/**
@@ -117,6 +122,7 @@ public class DevilFruitTypeService {
 	 *                                           entity} is {@literal null} a.k.a
 	 *                                           not found.
 	 */
+	@SuppressWarnings("null")
 	public DevilFruitType alter(Long id, DevilFruitType devilFruitType) {
 		DevilFruitType devilFruitTypeToAlter = devilFruitTypeRepo.findById(id).get();
 		BeanUtils.copyProperties(devilFruitType, devilFruitTypeToAlter, "id");
@@ -133,6 +139,7 @@ public class DevilFruitTypeService {
 	 * @throws IllegalArgumentException in case the given {@literal id} is
 	 *                                  {@literal null}
 	 */
+	@SuppressWarnings("null")
 	public void remove(Long id) {
 		devilFruitTypeRepo.deleteById(id);
 	}

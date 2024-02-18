@@ -12,12 +12,12 @@
 
 package com.marceljsh.model.repo;
 
-import java.util.List;
-
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.marceljsh.model.entity.DevilFruitType;
 
-public interface DevilFruitTypeRepo extends CrudRepository<DevilFruitType, Long> {
-	List<DevilFruitType> findByNameContains(String keyword);
+public interface DevilFruitTypeRepo extends JpaRepository<DevilFruitType, Long> {
+	Page<DevilFruitType> findByNameContains(String keyword, Pageable pageable);
 }

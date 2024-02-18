@@ -52,6 +52,7 @@ public class RegionService {
 	 *                                           present but does not exist in the
 	 *                                           database.
 	 */
+	@SuppressWarnings("null")
 	public Region save(Region region) {
 		return regionRepo.save(region);
 	}
@@ -70,6 +71,7 @@ public class RegionService {
 	 *                                   entity} is {@literal null} a.k.a
 	 *                                   not found.
 	 */
+	@SuppressWarnings("null")
 	public Region findOne(Long id) {
 		return regionRepo.findById(id).get();
 	}
@@ -91,6 +93,7 @@ public class RegionService {
 	 * @throws IllegalArgumentException in case the given {@link Iterable ids} or
 	 *                                  one of its items is {@literal null}.
 	 */
+	@SuppressWarnings("null")
 	public Page<Region> find(String keyword, Pageable pageable) {
 		if (keyword != null && !keyword.trim().isEmpty()) {
 			return regionRepo.findByNameContains(keyword, pageable);
@@ -123,6 +126,7 @@ public class RegionService {
 	 *                                           entity} is {@literal null} a.k.a
 	 *                                           not found.
 	 */
+	@SuppressWarnings("null")
 	public Region alter(Long id, Region region) {
 		Region regionToAlter = regionRepo.findById(id).get();
 		BeanUtils.copyProperties(region, regionToAlter, "id");
@@ -139,6 +143,7 @@ public class RegionService {
 	 * @throws IllegalArgumentException in case the given {@literal id} is
 	 *                                  {@literal null}
 	 */
+	@SuppressWarnings("null")
 	public void remove(Long id) {
 		regionRepo.deleteById(id);
 	}

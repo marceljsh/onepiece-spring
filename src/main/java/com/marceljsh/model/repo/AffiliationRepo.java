@@ -12,12 +12,12 @@
 
 package com.marceljsh.model.repo;
 
-import java.util.List;
-
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.marceljsh.model.entity.Affiliation;
 
-public interface AffiliationRepo extends CrudRepository<Affiliation, Long> {
-	List<Affiliation> findByNameContains(String keyword);
+public interface AffiliationRepo extends JpaRepository<Affiliation, Long> {
+	Page<Affiliation> findByNameContains(String keyword, Pageable pageable);
 }
