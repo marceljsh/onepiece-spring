@@ -42,8 +42,8 @@ public class AffiliationController {
 	/**
 	 * Create a new affiliation.
 	 *
-	 * @param affiliation The affiliation object to be created.
-	 * @return The ResponseEntity with the created affiliation.
+	 * @param affiliation The affiliation to create.
+	 * @return The created affiliation.
 	 */
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody Affiliation affiliation) {
@@ -51,10 +51,10 @@ public class AffiliationController {
 	}
 
 	/**
-	 * Read a specific affiliation by its ID.
+	 * Get an affiliation by its ID.
 	 *
-	 * @param id The ID of the affiliation to be read.
-	 * @return The ResponseEntity with the requested affiliation.
+	 * @param id The ID of the affiliation.
+	 * @return The affiliation with the specified ID.
 	 */
 	@GetMapping("/{id}")
 	public ResponseEntity<?> readOne(@PathVariable Long id) {
@@ -62,14 +62,17 @@ public class AffiliationController {
 	}
 
 	/**
-	 * Read all affiliations.
+	 * Get a list of affiliations.
 	 *
-	 * @param keyword (optional) A keyword to filter affiliations by.
-	 * @return The ResponseEntity with the list of affiliations.
+	 * @param keyword The keyword to search for in the affiliations.
+	 * @param page    The page number.
+	 * @param size    The number of affiliations per page.
+	 * @return A paginated list of affiliations.
 	 */
 	@GetMapping
 	public ResponseEntity<?> read(@RequestParam(required = false) String keyword,
-			@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size) {
+			@RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "10") int size) {
 		Pageable pageable = Pageable.ofSize(size).withPage(page - 1);
 		Page<Affiliation> pageResult = affiliationService.find(keyword, pageable);
 
@@ -83,11 +86,11 @@ public class AffiliationController {
 	}
 
 	/**
-	 * Update an existing affiliation.
+	 * Update an affiliation by its ID.
 	 *
-	 * @param id          The ID of the affiliation to be updated.
-	 * @param affiliation The updated affiliation object.
-	 * @return The ResponseEntity with the updated affiliation.
+	 * @param id          The ID of the affiliation to update.
+	 * @param affiliation The updated affiliation.
+	 * @return The updated affiliation.
 	 */
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Affiliation affiliation) {
@@ -97,8 +100,8 @@ public class AffiliationController {
 	/**
 	 * Delete an affiliation by its ID.
 	 *
-	 * @param id The ID of the affiliation to be deleted.
-	 * @return The ResponseEntity with a success message.
+	 * @param id The ID of the affiliation to delete.
+	 * @return A message indicating the deletion status.
 	 */
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable Long id) {

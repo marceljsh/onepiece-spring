@@ -40,10 +40,10 @@ public class DevilFruitTypeController {
 	private DevilFruitTypeService devilFruitTypeService;
 
 	/**
-	 * Create a new Devil Fruit Type.
+	 * Create a new DevilFruitType.
 	 *
-	 * @param devilFruitType The Devil Fruit Type to create.
-	 * @return The created Devil Fruit Type.
+	 * @param devilFruitType The DevilFruitType object to be created.
+	 * @return The ResponseEntity with the created DevilFruitType.
 	 */
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody DevilFruitType devilFruitType) {
@@ -51,10 +51,10 @@ public class DevilFruitTypeController {
 	}
 
 	/**
-	 * Get a Devil Fruit Type by ID.
+	 * Read a specific DevilFruitType by its ID.
 	 *
-	 * @param id The ID of the Devil Fruit Type.
-	 * @return The Devil Fruit Type with the specified ID.
+	 * @param id The ID of the DevilFruitType to be read.
+	 * @return The ResponseEntity with the requested DevilFruitType.
 	 */
 	@GetMapping("/{id}")
 	public ResponseEntity<?> readOne(@PathVariable("id") Long id) {
@@ -62,32 +62,36 @@ public class DevilFruitTypeController {
 	}
 
 	/**
-	 * Get all Devil Fruit Types.
+	 * Read DevilFruitTypes with optional filtering and pagination.
 	 *
-	 * @param keyword (Optional) A keyword to filter Devil Fruit Types by name.
-	 * @return A list of Devil Fruit Types.
+	 * @param keyword The optional keyword for filtering DevilFruitTypes.
+	 * @param page    The page number for pagination (default: 1).
+	 * @param size    The page size for pagination (default: 10).
+	 * @return The ResponseEntity with the paginated DevilFruitTypes.
 	 */
 	@GetMapping
-	public ResponseEntity<?> read(@RequestParam(required = false) String keyword, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size) {
+	public ResponseEntity<?> read(@RequestParam(required = false) String keyword,
+								  @RequestParam(defaultValue = "1") int page,
+								  @RequestParam(defaultValue = "10") int size) {
 		Pageable pageable = Pageable.ofSize(size).withPage(page - 1);
 		Page<DevilFruitType> pageResult = devilFruitTypeService.find(keyword, pageable);
 
 		return ResponseEntity.ok().body(Bundler.pack(
-			"devil_fruit_types", pageResult.getContent(),
-			"page_size", pageResult.getSize(),
-			"current_page", pageResult.getNumber() + 1,
-			"total_pages", pageResult.getTotalPages(),
-			"length", pageResult.getNumberOfElements(),
-			"total_elements", pageResult.getTotalElements()
+				"devil_fruit_types", pageResult.getContent(),
+				"page_size", pageResult.getSize(),
+				"current_page", pageResult.getNumber() + 1,
+				"total_pages", pageResult.getTotalPages(),
+				"length", pageResult.getNumberOfElements(),
+				"total_elements", pageResult.getTotalElements()
 		));
 	}
 
 	/**
-	 * Update a Devil Fruit Type by ID.
+	 * Update a specific DevilFruitType by its ID.
 	 *
-	 * @param id             The ID of the Devil Fruit Type to update.
-	 * @param devilFruitType The updated Devil Fruit Type.
-	 * @return The updated Devil Fruit Type.
+	 * @param id              The ID of the DevilFruitType to be updated.
+	 * @param devilFruitType  The updated DevilFruitType object.
+	 * @return The ResponseEntity with the updated DevilFruitType.
 	 */
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody DevilFruitType devilFruitType) {
@@ -95,10 +99,10 @@ public class DevilFruitTypeController {
 	}
 
 	/**
-	 * Delete a Devil Fruit Type by ID.
+	 * Delete a specific DevilFruitType by its ID.
 	 *
-	 * @param id The ID of the Devil Fruit Type to delete.
-	 * @return A message indicating the deletion status.
+	 * @param id The ID of the DevilFruitType to be deleted.
+	 * @return The ResponseEntity with a success message.
 	 */
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {

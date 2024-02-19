@@ -15,7 +15,6 @@ package com.marceljsh.controller;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -48,23 +47,10 @@ public class DevilFruitController {
 	private DevilFruitTypeService devilFruitTypeService;
 
 	/**
-	 * Saves a given entity. Use the returned instance for further operations as the
-	 * save operation might have changed the entity instance completely.
+	 * Create a new Devil Fruit.
 	 *
-	 * @param devilFruitDTO The DevilFruitDTO object containing the details of the
-	 *                      DevilFruit to create.
-	 * @return The ResponseEntity containing the created DevilFruit or an error
-	 *         response.
-	 * @throws IllegalArgumentException          in case the given {@literal entity}
-	 *                                           is {@literal null}.
-	 * @throws OptimisticLockingFailureException when the entity uses optimistic
-	 *                                           locking and has a version attribute
-	 *                                           with a different value from that
-	 *                                           found in the persistence store.
-	 *                                           Also thrown if the entity is
-	 *                                           assumed to be present but does not
-	 *                                           exist
-	 *                                           in the database.
+	 * @param devilFruitDTO The DevilFruitDTO object containing the details of the Devil Fruit.
+	 * @return The ResponseEntity with the created Devil Fruit.
 	 */
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody DevilFruitDTO devilFruitDTO) {
@@ -73,11 +59,10 @@ public class DevilFruitController {
 	}
 
 	/**
-	 * Retrieves a DevilFruit by its ID.
+	 * Get a Devil Fruit by its ID.
 	 *
-	 * @param id The ID of the DevilFruit to retrieve.
-	 * @return The ResponseEntity containing the retrieved DevilFruit or an error
-	 *         response.
+	 * @param id The ID of the Devil Fruit.
+	 * @return The ResponseEntity with the Devil Fruit.
 	 */
 	@GetMapping("/{id}")
 	public ResponseEntity<?> readOne(@PathVariable("id") Long id) {
@@ -85,12 +70,12 @@ public class DevilFruitController {
 	}
 
 	/**
-	 * Retrieves all DevilFruits.
+	 * Get a list of Devil Fruits.
 	 *
-	 * @param keyword (optional) A keyword to filter the DevilFruits by name or
-	 *                English name.
-	 * @return The ResponseEntity containing the retrieved DevilFruits or an error
-	 *         response.
+	 * @param keyword The keyword to search for Devil Fruits (optional).
+	 * @param page The page number (default: 1).
+	 * @param size The page size (default: 10).
+	 * @return The ResponseEntity with the list of Devil Fruits.
 	 */
 	@GetMapping
 	public ResponseEntity<?> read(@RequestParam(required = false) String keyword, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size) {
@@ -108,13 +93,11 @@ public class DevilFruitController {
 	}
 
 	/**
-	 * Updates a DevilFruit by its ID.
+	 * Update a Devil Fruit by its ID.
 	 *
-	 * @param id            The ID of the DevilFruit to update.
-	 * @param devilFruitDTO The DevilFruitDTO object containing the updated details
-	 *                      of the DevilFruit.
-	 * @return The ResponseEntity containing the updated DevilFruit or an error
-	 *         response.
+	 * @param id The ID of the Devil Fruit.
+	 * @param devilFruitDTO The DevilFruitDTO object containing the updated details of the Devil Fruit.
+	 * @return The ResponseEntity with the updated Devil Fruit.
 	 */
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody DevilFruitDTO devilFruitDTO) {
@@ -123,10 +106,10 @@ public class DevilFruitController {
 	}
 
 	/**
-	 * Deletes a DevilFruit by its ID.
+	 * Delete a Devil Fruit by its ID.
 	 *
-	 * @param id The ID of the DevilFruit to delete.
-	 * @return The ResponseEntity containing a success message or an error response.
+	 * @param id The ID of the Devil Fruit.
+	 * @return The ResponseEntity with the success message.
 	 */
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
@@ -134,7 +117,12 @@ public class DevilFruitController {
 		return ResponseEntity.ok().body(Map.of("message", "devil fruit deleted successfully"));
 	}
 
-	// * helper method
+	/**
+	 * Convert a DevilFruitDTO object to a DevilFruit object.
+	 *
+	 * @param devilFruitDTO The DevilFruitDTO object to convert.
+	 * @return The converted DevilFruit object.
+	 */
 	public DevilFruit convertToDevilFruit(DevilFruitDTO devilFruitDTO) {
 		DevilFruit devilFruit = new DevilFruit();
 		DevilFruitType devilFruitType = devilFruitTypeService.findOne(devilFruitDTO.getDevilFruitTypeId());

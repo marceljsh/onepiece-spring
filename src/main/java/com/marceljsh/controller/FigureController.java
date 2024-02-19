@@ -61,20 +61,41 @@ public class FigureController {
 	@Autowired
 	private OccupationService occupationService;
 
+	/**
+	 * Create a new figure.
+	 *
+	 * @param figureDTO The figure data transfer object.
+	 * @return The response entity with the created figure.
+	 */
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody FigureDTO figureDTO) {
 		Figure figure = convertToFigure(figureDTO);
 		return ResponseEntity.ok(figureService.save(figure));
 	}
 
+	/**
+	 * Get a figure by its ID.
+	 *
+	 * @param id The ID of the figure.
+	 * @return The response entity with the requested figure.
+	 */
 	@GetMapping("/{id}")
 	public ResponseEntity<?> readOne(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(figureService.findOne(id));
 	}
 
+	/**
+	 * Get a list of figures.
+	 *
+	 * @param keyword The keyword to search for in figure names.
+	 * @param page    The page number.
+	 * @param size    The number of figures per page.
+	 * @return The response entity with the list of figures.
+	 */
 	@GetMapping
 	public ResponseEntity<?> read(@RequestParam(required = false) String keyword,
-			@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size) {
+			@RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "10") int size) {
 		Pageable pageable = Pageable.ofSize(size).withPage(page - 1);
 		Page<Figure> pageResult = figureService.find(keyword, pageable);
 
@@ -87,19 +108,37 @@ public class FigureController {
 				"total_elements", pageResult.getTotalElements()));
 	}
 
+	/**
+	 * Update a figure by its ID.
+	 *
+	 * @param id        The ID of the figure.
+	 * @param figureDTO The updated figure data transfer object.
+	 * @return The response entity with the updated figure.
+	 */
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody FigureDTO figureDTO) {
 		Figure figure = convertToFigure(figureDTO);
 		return ResponseEntity.ok(figureService.alter(id, figure));
 	}
 
+	/**
+	 * Delete a figure by its ID.
+	 *
+	 * @param id The ID of the figure.
+	 * @return The response entity with a success message.
+	 */
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 		figureService.remove(id);
 		return ResponseEntity.ok(Map.of("message", "figure deleted successfully"));
 	}
 
-	// * helper methods
+	/**
+	 * Convert a figure data transfer object to a figure entity.
+	 *
+	 * @param figureDTO The figure data transfer object.
+	 * @return The converted figure entity.
+	 */
 	@SuppressWarnings("null")
 	public Figure convertToFigure(FigureDTO figureDTO) {
 		Figure figure = new Figure();
@@ -135,6 +174,15 @@ public class FigureController {
 		return figure;
 	}
 
+	// * helper method
+	/**
+	 * Convert a set of IDs to a set of entities using the provided fetch function.
+	 *
+	 * @param ids           The set of IDs.
+	 * @param fetchFunction The function to fetch an entity by its ID.
+	 * @param <T>           The type of the entity.
+	 * @return The set of entities.
+	 */
 	private <T> Set<T> convertIdSetToEntitySet(Set<Long> ids, Function<Long, T> fetchFunction) {
 		return ids == null ? null : ids.stream().map(fetchFunction).collect(Collectors.toSet());
 	}

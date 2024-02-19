@@ -38,10 +38,10 @@ public class RegionController {
 	private RegionService regionService;
 
 	/**
-	 * Create a new region.
+	 * Creates a new region.
 	 *
-	 * @param region The region object to be created.
-	 * @return ResponseEntity with the created region.
+	 * @param region the region to be created
+	 * @return the response entity with the created region
 	 */
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody Region region) {
@@ -49,10 +49,10 @@ public class RegionController {
 	}
 
 	/**
-	 * Get a region by its ID.
+	 * Retrieves a specific region by its ID.
 	 *
-	 * @param id The ID of the region to retrieve.
-	 * @return ResponseEntity with the retrieved region.
+	 * @param id the ID of the region to be retrieved
+	 * @return the response entity with the retrieved region
 	 */
 	@GetMapping("/{id}")
 	public ResponseEntity<?> readOne(@PathVariable Long id) {
@@ -60,12 +60,13 @@ public class RegionController {
 	}
 
 	/**
-	 * Get regions with optional filtering and pagination.
+	 * Retrieves a list of regions based on the specified parameters.
 	 *
-	 * @param keyword The keyword to filter regions by.
-	 * @param page    The page number for pagination.
-	 * @param size    The number of regions per page.
-	 * @return ResponseEntity with the paginated regions.
+	 * @param keyword the keyword to search for in region names (optional)
+	 * @param page    the page number (default: 1)
+	 * @param size    the page size (default: 10)
+	 * @return the response entity with the list of regions and pagination
+	 *         information
 	 */
 	@GetMapping
 	public ResponseEntity<?> read(@RequestParam(required = false) String keyword,
@@ -84,11 +85,11 @@ public class RegionController {
 	}
 
 	/**
-	 * Update a region by its ID.
+	 * Updates a specific region by its ID.
 	 *
-	 * @param id     The ID of the region to update.
-	 * @param region The updated region object.
-	 * @return ResponseEntity with the updated region.
+	 * @param id     the ID of the region to be updated
+	 * @param region the updated region
+	 * @return the response entity with the updated region
 	 */
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Region region) {
@@ -96,10 +97,10 @@ public class RegionController {
 	}
 
 	/**
-	 * Delete a region by its ID.
+	 * Deletes a specific region by its ID.
 	 *
-	 * @param id The ID of the region to delete.
-	 * @return ResponseEntity with a success message.
+	 * @param id the ID of the region to be deleted
+	 * @return the response entity with a success message
 	 */
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable Long id) {

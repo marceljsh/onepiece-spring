@@ -31,26 +31,10 @@ public class DevilFruitTypeService {
 	private DevilFruitTypeRepo devilFruitTypeRepo;
 
 	/**
-	 * Saves a given entity. Use the returned instance for further operations as the
-	 * save operation might have changed the
-	 * entity instance completely.
+	 * Saves a DevilFruitType object.
 	 *
-	 * @param entity must not be {@literal null}.
-	 * 
-	 * @return the saved entity; will never be {@literal null}.
-	 * 
-	 * @throws IllegalArgumentException          in case the given {@literal entity}
-	 *                                           is {@literal null}.
-	 * 
-	 * @throws OptimisticLockingFailureException when the entity uses optimistic
-	 *                                           locking and has a version attribute
-	 *                                           with
-	 *                                           a different value from that found
-	 *                                           in the persistence store. Also
-	 *                                           thrown if the entity is assumed to
-	 *                                           be
-	 *                                           present but does not exist in the
-	 *                                           database.
+	 * @param devilFruitType The DevilFruitType object to be saved.
+	 * @return The saved DevilFruitType object.
 	 */
 	@SuppressWarnings("null")
 	public DevilFruitType save(DevilFruitType devilFruitType) {
@@ -58,16 +42,10 @@ public class DevilFruitTypeService {
 	}
 
 	/**
-	 * Retrieves an entity by its id.
+	 * Finds a DevilFruitType object by its ID.
 	 *
-	 * @param id must not be {@literal null}.
-	 * 
-	 * @return the entity with the given id or {@literal Optional#empty()} if none
-	 *         found.
-	 * 
-	 * @throws IllegalArgumentException  if {@literal id} is {@literal null}.
-	 * 
-	 * @throws ResourceNotFoundException in case the given {@link target entity} is
+	 * @param id The ID of the DevilFruitType object to be found.
+	 * @return The found DevilFruitType object.
 	 */
 	@SuppressWarnings("null")
 	public DevilFruitType findOne(Long id) {
@@ -75,19 +53,11 @@ public class DevilFruitTypeService {
 	}
 
 	/**
-	 * Returns all instances of the type {@code DevilFruitType} with the given IDs.
-	 * <p>
-	 * If some or all ids are not found, no entities are returned for these IDs.
-	 * <p>
-	 * Note that the order of elements in the result is not guaranteed.
+	 * Finds DevilFruitType objects based on a keyword and pageable information.
 	 *
-	 * @param ids must not be {@literal null} nor contain any {@literal null}
-	 *            values.
-	 * @return guaranteed to be not {@literal null}. The size can be equal or less
-	 *         than the number of given
-	 *         {@literal ids}.
-	 * @throws IllegalArgumentException in case the given {@link Iterable ids} or
-	 *                                  one of its items is {@literal null}.
+	 * @param keyword  The keyword to search for in the DevilFruitType names.
+	 * @param pageable The pageable information for pagination.
+	 * @return A Page object containing the found DevilFruitType objects.
 	 */
 	@SuppressWarnings("null")
 	public Page<DevilFruitType> find(String keyword, Pageable pageable) {
@@ -98,29 +68,12 @@ public class DevilFruitTypeService {
 	}
 
 	/**
-	 * Saves given entity.
+	 * Alters a DevilFruitType object by updating its properties.
 	 *
-	 * @param entity must not be {@literal null} nor must it contain
-	 *               {@literal null}.
-	 * 
-	 * @return the saved entity; will never be {@literal null}.
-	 * 
-	 * @throws IllegalArgumentException          in case the given {@link Iterable
-	 *                                           entities} or one of its entities is
-	 *                                           {@literal null}.
-	 * 
-	 * @throws OptimisticLockingFailureException when at least one entity uses
-	 *                                           optimistic locking and has a
-	 *                                           version
-	 *                                           attribute with a different value
-	 *                                           from that found in the persistence
-	 *                                           store. Also thrown if at least one
-	 *                                           entity is assumed to be present but
-	 *                                           does not exist in the database.
-	 * 
-	 * @throws ResourceNotFoundException         in case the given {@link target
-	 *                                           entity} is {@literal null} a.k.a
-	 *                                           not found.
+	 * @param id             The ID of the DevilFruitType object to be altered.
+	 * @param devilFruitType The DevilFruitType object containing the updated
+	 *                       properties.
+	 * @return The altered DevilFruitType object.
 	 */
 	@SuppressWarnings("null")
 	public DevilFruitType alter(Long id, DevilFruitType devilFruitType) {
@@ -130,14 +83,9 @@ public class DevilFruitTypeService {
 	}
 
 	/**
-	 * Deletes the entity with the given id.
-	 * <p>
-	 * If the entity is not found, it is silently ignored.
+	 * Removes a DevilFruitType object by its ID.
 	 *
-	 * @param id must not be {@literal null}.
-	 * 
-	 * @throws IllegalArgumentException in case the given {@literal id} is
-	 *                                  {@literal null}
+	 * @param id The ID of the DevilFruitType object to be removed.
 	 */
 	@SuppressWarnings("null")
 	public void remove(Long id) {

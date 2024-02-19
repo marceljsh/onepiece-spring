@@ -18,15 +18,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.marceljsh.exception.ResourceNotFoundException;
 import com.marceljsh.model.entity.Affiliation;
 import com.marceljsh.model.repo.AffiliationRepo;
 
 import jakarta.transaction.Transactional;
 
-/**
- * Service class for managing Affiliation entities.
- */
 @Service
 @Transactional
 public class AffiliationService {
@@ -35,10 +31,10 @@ public class AffiliationService {
 	private AffiliationRepo affiliationRepo;
 
 	/**
-	 * Saves an Affiliation entity.
+	 * Saves an affiliation.
 	 *
-	 * @param affiliation the Affiliation entity to save
-	 * @return the saved Affiliation entity
+	 * @param affiliation The affiliation to be saved.
+	 * @return The saved affiliation.
 	 */
 	@SuppressWarnings("null")
 	public Affiliation save(Affiliation affiliation) {
@@ -46,13 +42,10 @@ public class AffiliationService {
 	}
 
 	/**
-	 * Retrieves an Affiliation entity by its id.
+	 * Finds an affiliation by its ID.
 	 *
-	 * @param id the id of the Affiliation entity
-	 * @return the Affiliation entity with the given id, or Optional.empty() if none
-	 *         found
-	 * @throws IllegalArgumentException  if id is null
-	 * @throws ResourceNotFoundException if the Affiliation entity is not found
+	 * @param id The ID of the affiliation to be found.
+	 * @return The found affiliation.
 	 */
 	@SuppressWarnings("null")
 	public Affiliation findOne(Long id) {
@@ -60,13 +53,11 @@ public class AffiliationService {
 	}
 
 	/**
-	 * Returns a Page of Affiliation entities based on the given keyword and
-	 * pageable.
+	 * Finds affiliations based on a keyword and pageable information.
 	 *
-	 * @param keyword  the keyword to search for in the Affiliation name
-	 * @param pageable the pageable object for pagination
-	 * @return a Page of Affiliation entities
-	 * @throws IllegalArgumentException if keyword or pageable is null
+	 * @param keyword  The keyword to search for in affiliation names.
+	 * @param pageable The pageable information for pagination.
+	 * @return A page of affiliations matching the keyword.
 	 */
 	@SuppressWarnings("null")
 	public Page<Affiliation> find(String keyword, Pageable pageable) {
@@ -77,11 +68,11 @@ public class AffiliationService {
 	}
 
 	/**
-	 * Updates an existing Affiliation entity with the given id.
+	 * Alters an existing affiliation by updating its properties.
 	 *
-	 * @param id          the id of the Affiliation entity to update
-	 * @param affiliation the updated Affiliation entity
-	 * @return the updated Affiliation entity
+	 * @param id          The ID of the affiliation to be altered.
+	 * @param affiliation The updated affiliation object.
+	 * @return The altered affiliation.
 	 */
 	@SuppressWarnings("null")
 	public Affiliation alter(Long id, Affiliation affiliation) {
@@ -91,9 +82,9 @@ public class AffiliationService {
 	}
 
 	/**
-	 * Removes an Affiliation entity by its id.
+	 * Removes an affiliation by its ID.
 	 *
-	 * @param id the id of the Affiliation entity to remove
+	 * @param id The ID of the affiliation to be removed.
 	 */
 	public void remove(Long id) {
 		if (id != null) {

@@ -14,12 +14,10 @@ package com.marceljsh.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.marceljsh.exception.ResourceNotFoundException;
 import com.marceljsh.model.entity.Figure;
 import com.marceljsh.model.repo.FigureRepo;
 
@@ -33,26 +31,10 @@ public class FigureService {
 	private FigureRepo figureRepo;
 
 	/**
-	 * Saves a given entity. Use the returned instance for further operations as the
-	 * save operation might have changed the
-	 * entity instance completely.
+	 * Saves a Figure object.
 	 *
-	 * @param entity must not be {@literal null}.
-	 * 
-	 * @return the saved entity; will never be {@literal null}.
-	 * 
-	 * @throws IllegalArgumentException          in case the given {@literal entity}
-	 *                                           is {@literal null}.
-	 * 
-	 * @throws OptimisticLockingFailureException when the entity uses optimistic
-	 *                                           locking and has a version attribute
-	 *                                           with
-	 *                                           a different value from that found
-	 *                                           in the persistence store. Also
-	 *                                           thrown if the entity is assumed to
-	 *                                           be
-	 *                                           present but does not exist in the
-	 *                                           database.
+	 * @param figure The Figure object to be saved.
+	 * @return The saved Figure object.
 	 */
 	@SuppressWarnings("null")
 	public Figure save(Figure figure) {
@@ -60,17 +42,10 @@ public class FigureService {
 	}
 
 	/**
-	 * Returns whether an entity with the given id exists.
+	 * Retrieves a Figure object by its ID.
 	 *
-	 * @param id must not be {@literal null}.
-	 * 
-	 * @return {@literal true} if an entity with the given id exists,
-	 *         {@literal false} otherwise.
-	 * 
-	 * @throws IllegalArgumentException  if {@literal id} is {@literal null}.
-	 * 
-	 * @throws ResourceNotFoundException in case the given {@link target entity} is
-	 *                                   {@literal null} a.k.a not found.
+	 * @param id The ID of the Figure object to be retrieved.
+	 * @return The retrieved Figure object.
 	 */
 	@SuppressWarnings("null")
 	public Figure findOne(Long id) {
@@ -78,21 +53,11 @@ public class FigureService {
 	}
 
 	/**
-	 * Returns all instances of the type {@code DevilFruit} with the given IDs.
-	 * <p>
-	 * If some or all ids are not found, no entities are returned for these IDs.
-	 * <p>
-	 * Note that the order of elements in the result is not guaranteed.
+	 * Finds a list of Figure objects based on a keyword and pageable information.
 	 *
-	 * @param ids must not be {@literal null} nor contain any {@literal null}
-	 *            values.
-	 * 
-	 * @return guaranteed to be not {@literal null}. The size can be equal or less
-	 *         than the number of given
-	 *         {@literal ids}.
-	 * 
-	 * @throws IllegalArgumentException in case the given {@link Iterable ids} or
-	 *                                  one of its items is {@literal null}.
+	 * @param keyword  The keyword to search for in the Figure objects.
+	 * @param pageable The pageable information for pagination.
+	 * @return A Page object containing the list of Figure objects.
 	 */
 	@SuppressWarnings("null")
 	public Page<Figure> find(String keyword, Pageable pageable) {
@@ -103,29 +68,11 @@ public class FigureService {
 	}
 
 	/**
-	 * Saves given entity.
+	 * Alters a Figure object by updating its properties.
 	 *
-	 * @param entity must not be {@literal null} nor must it contain
-	 *               {@literal null}.
-	 * 
-	 * @return the saved entity; will never be {@literal null}.
-	 * 
-	 * @throws IllegalArgumentException          in case the given {@link Iterable
-	 *                                           entities} or one of its entities is
-	 *                                           {@literal null}.
-	 * 
-	 * @throws OptimisticLockingFailureException when at least one entity uses
-	 *                                           optimistic locking and has a
-	 *                                           version
-	 *                                           attribute with a different value
-	 *                                           from that found in the persistence
-	 *                                           store. Also thrown if at least one
-	 *                                           entity is assumed to be present but
-	 *                                           does not exist in the database.
-	 * 
-	 * @throws ResourceNotFoundException         in case the given {@link target
-	 *                                           entity} is {@literal null} a.k.a
-	 *                                           not found.
+	 * @param id     The ID of the Figure object to be altered.
+	 * @param figure The updated Figure object.
+	 * @return The altered Figure object.
 	 */
 	@SuppressWarnings("null")
 	public Figure alter(Long id, Figure figure) {
@@ -135,14 +82,9 @@ public class FigureService {
 	}
 
 	/**
-	 * Deletes the entity with the given id.
-	 * <p>
-	 * If the entity is not found, it is silently ignored.
+	 * Removes a Figure object by its ID.
 	 *
-	 * @param id must not be {@literal null}.
-	 * 
-	 * @throws IllegalArgumentException in case the given {@literal id} is
-	 *                                  {@literal null}
+	 * @param id The ID of the Figure object to be removed.
 	 */
 	@SuppressWarnings("null")
 	public void remove(Long id) {

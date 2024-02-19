@@ -11,11 +11,11 @@ import com.marceljsh.helper.Bundler;
 @RestController
 @RequestMapping("/ping")
 public class PingController {
+
 	/**
-	 * Handles the "/ping" endpoint and returns a map with a message indicating that
-	 * the host is reachable.
-	 *
-	 * @return a map containing the message
+	 * Handles GET requests to the /ping endpoint.
+	 * 
+	 * @return A map containing the message "host is reachable".
 	 */
 	@GetMapping
 	public Map<String, Object> ping() {

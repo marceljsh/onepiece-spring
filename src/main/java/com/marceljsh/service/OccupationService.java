@@ -31,26 +31,10 @@ public class OccupationService {
 	private OccupationRepo occupationRepo;
 
 	/**
-	 * Saves a given entity. Use the returned instance for further operations as the
-	 * save operation might have changed the
-	 * entity instance completely.
+	 * Saves the given Occupation object.
 	 *
-	 * @param entity must not be {@literal null}.
-	 * 
-	 * @return the saved entity; will never be {@literal null}.
-	 * 
-	 * @throws IllegalArgumentException          in case the given {@literal entity}
-	 *                                           is {@literal null}.
-	 * 
-	 * @throws OptimisticLockingFailureException when the entity uses optimistic
-	 *                                           locking and has a version attribute
-	 *                                           with
-	 *                                           a different value from that found
-	 *                                           in the persistence store. Also
-	 *                                           thrown if the entity is assumed to
-	 *                                           be
-	 *                                           present but does not exist in the
-	 *                                           database.
+	 * @param occupation the Occupation object to be saved
+	 * @return the saved Occupation object
 	 */
 	@SuppressWarnings("null")
 	public Occupation save(Occupation occupation) {
@@ -58,18 +42,10 @@ public class OccupationService {
 	}
 
 	/**
-	 * Retrieves an entity by its id.
+	 * Retrieves an Occupation object by its ID.
 	 *
-	 * @param id must not be {@literal null}.
-	 * 
-	 * @return the entity with the given id or {@literal Optional#empty()} if none
-	 *         found.
-	 * 
-	 * @throws IllegalArgumentException  if {@literal id} is {@literal null}.
-	 * 
-	 * @throws ResourceNotFoundException in case the given {@link target
-	 *                                   entity} is {@literal null} a.k.a
-	 *                                   not found.
+	 * @param id the ID of the Occupation object to be retrieved
+	 * @return the retrieved Occupation object
 	 */
 	@SuppressWarnings("null")
 	public Occupation findOne(Long id) {
@@ -77,21 +53,12 @@ public class OccupationService {
 	}
 
 	/**
-	 * Returns all instances of the type {@code DevilFruit} with the given IDs.
-	 * <p>
-	 * If some or all ids are not found, no entities are returned for these IDs.
-	 * <p>
-	 * Note that the order of elements in the result is not guaranteed.
+	 * Finds Occupation objects based on the provided keyword and pageable
+	 * information.
 	 *
-	 * @param ids must not be {@literal null} nor contain any {@literal null}
-	 *            values.
-	 * 
-	 * @return guaranteed to be not {@literal null}. The size can be equal or less
-	 *         than the number of given
-	 *         {@literal ids}.
-	 * 
-	 * @throws IllegalArgumentException in case the given {@link Iterable ids} or
-	 *                                  one of its items is {@literal null}.
+	 * @param keyword  the keyword to search for in the Occupation names
+	 * @param pageable the pageable information for pagination and sorting
+	 * @return a Page object containing the found Occupation objects
 	 */
 	@SuppressWarnings("null")
 	public Page<Occupation> find(String keyword, Pageable pageable) {
@@ -102,29 +69,12 @@ public class OccupationService {
 	}
 
 	/**
-	 * Saves given entity.
+	 * Alters an existing Occupation object with the provided ID and new Occupation
+	 * object.
 	 *
-	 * @param entity must not be {@literal null} nor must it contain
-	 *               {@literal null}.
-	 * 
-	 * @return the saved entity; will never be {@literal null}.
-	 * 
-	 * @throws IllegalArgumentException          in case the given {@link Iterable
-	 *                                           entities} or one of its entities is
-	 *                                           {@literal null}.
-	 * 
-	 * @throws OptimisticLockingFailureException when at least one entity uses
-	 *                                           optimistic locking and has a
-	 *                                           version
-	 *                                           attribute with a different value
-	 *                                           from that found in the persistence
-	 *                                           store. Also thrown if at least one
-	 *                                           entity is assumed to be present but
-	 *                                           does not exist in the database.
-	 * 
-	 * @throws ResourceNotFoundException         in case the given {@link target
-	 *                                           entity} is {@literal null} a.k.a
-	 *                                           not found.
+	 * @param id         the ID of the Occupation object to be altered
+	 * @param occupation the new Occupation object with updated information
+	 * @return the altered Occupation object
 	 */
 	@SuppressWarnings("null")
 	public Occupation alter(Long id, Occupation occupation) {
@@ -134,14 +84,9 @@ public class OccupationService {
 	}
 
 	/**
-	 * Deletes the entity with the given id.
-	 * <p>
-	 * If the entity is not found, it is silently ignored.
+	 * Removes an Occupation object by its ID.
 	 *
-	 * @param id must not be {@literal null}.
-	 * 
-	 * @throws IllegalArgumentException in case the given {@literal id} is
-	 *                                  {@literal null}
+	 * @param id the ID of the Occupation object to be removed
 	 */
 	@SuppressWarnings("null")
 	public void remove(Long id) {

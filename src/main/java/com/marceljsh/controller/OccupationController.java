@@ -40,10 +40,10 @@ public class OccupationController {
 	private OccupationService occupationService;
 
 	/**
-	 * Create a new occupation.
+	 * Creates a new occupation.
 	 *
-	 * @param occupation The occupation object to be created.
-	 * @return ResponseEntity with the created occupation.
+	 * @param occupation The occupation to be created.
+	 * @return The ResponseEntity with the created occupation.
 	 */
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody Occupation occupation) {
@@ -51,10 +51,10 @@ public class OccupationController {
 	}
 
 	/**
-	 * Get a specific occupation by its ID.
+	 * Retrieves a specific occupation by its ID.
 	 *
-	 * @param id The ID of the occupation to retrieve.
-	 * @return ResponseEntity with the requested occupation.
+	 * @param id The ID of the occupation to be retrieved.
+	 * @return The ResponseEntity with the retrieved occupation.
 	 */
 	@GetMapping("/{id}")
 	public ResponseEntity<?> readOne(@PathVariable Long id) {
@@ -62,14 +62,19 @@ public class OccupationController {
 	}
 
 	/**
-	 * Get a list of occupations.
+	 * Retrieves a list of occupations based on the provided keyword, page, and
+	 * size.
 	 *
-	 * @param keyword (optional) A keyword to filter the occupations.
-	 * @return ResponseEntity with the list of occupations.
+	 * @param keyword The keyword to search for in occupation names.
+	 * @param page    The page number of the results.
+	 * @param size    The number of results per page.
+	 * @return The ResponseEntity with the list of occupations and pagination
+	 *         information.
 	 */
 	@GetMapping
 	public ResponseEntity<?> read(@RequestParam(required = false) String keyword,
-			@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size) {
+			@RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "10") int size) {
 		Pageable pageable = Pageable.ofSize(size).withPage(page - 1);
 		Page<Occupation> pageResult = occupationService.find(keyword, pageable);
 
@@ -83,11 +88,11 @@ public class OccupationController {
 	}
 
 	/**
-	 * Update an existing occupation.
+	 * Updates an existing occupation.
 	 *
-	 * @param id         The ID of the occupation to update.
-	 * @param occupation The updated occupation object.
-	 * @return ResponseEntity with the updated occupation.
+	 * @param id         The ID of the occupation to be updated.
+	 * @param occupation The updated occupation.
+	 * @return The ResponseEntity with the updated occupation.
 	 */
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Occupation occupation) {
@@ -95,10 +100,10 @@ public class OccupationController {
 	}
 
 	/**
-	 * Delete an occupation by its ID.
+	 * Deletes an occupation by its ID.
 	 *
-	 * @param id The ID of the occupation to delete.
-	 * @return ResponseEntity with a success message.
+	 * @param id The ID of the occupation to be deleted.
+	 * @return The ResponseEntity with a success message.
 	 */
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable Long id) {
