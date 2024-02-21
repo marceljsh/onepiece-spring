@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.marceljsh.helper.Bundler;
 
 @RestController
-@RequestMapping("/ping")
+@RequestMapping
 public class PingController {
 
 	/**
@@ -17,8 +17,13 @@ public class PingController {
 	 * 
 	 * @return A map containing the message "host is reachable".
 	 */
-	@GetMapping
+	@GetMapping("/ping")
 	public Map<String, Object> ping() {
 		return Bundler.pack("message", "host is reachable");
+	}
+
+	@GetMapping
+	public Map<String, Object> defaultEndpoint() {
+		return Bundler.pack("message", "one piece api");
 	}
 }
