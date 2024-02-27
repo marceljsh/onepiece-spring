@@ -22,10 +22,7 @@ Contributions are welcome! If you'd like to contribute to the project, please fo
 #### Default endpoints
 
 <details>
-<summary>
-  <code>GET</code>
-  <code><b>/</b></code>
-</summary>
+  <summary><code>GET</code><code><b>/</b></code></summary>
 
 ##### Parameters
 
@@ -46,12 +43,7 @@ Contributions are welcome! If you'd like to contribute to the project, please fo
 </details>
 
 <details>
-<summary>
-  <code>GET</code>
-  <code>
-    <b>/ping</b>
-  </code>
-</summary>
+  <summary><code>GET</code><code><b>/ping</b></code></summary>
 
 ##### Parameters
 
@@ -76,12 +68,7 @@ Contributions are welcome! If you'd like to contribute to the project, please fo
 #### Affiliation
 
 <details>
-<summary>
-  <code>GET</code>
-  <code>
-    <b>/api/v1/affiliations/{id}</b>
-  </code>
-</summary>
+  <summary><code>GET</code><code><b>/api/v1/affiliations/{id}</b></code></summary>
 
 Gets a specific Affiliation by its ID
 
@@ -107,12 +94,7 @@ Gets a specific Affiliation by its ID
 </details>
 
 <details>
-<summary>
-  <code>GET</code>
-  <code>
-    <b>/api/v1/affiliations?keyword={keyword}&page={page}&size={size}</b>
-  </code>
-</summary>
+  <summary><code>GET</code><code><b>/api/v1/affiliations?keyword={keyword}&page={page}&size={size}</b></code></summary>
 
 Gets Affiliations where by default page is 1 and size is 10
 
@@ -144,12 +126,7 @@ Gets Affiliations where by default page is 1 and size is 10
 </details>
 
 <details>
-<summary>
-  <code>POST</code>
-  <code>
-    <b>/api/v1/affiliations</b>
-  </code>
-</summary>
+  <summary><code>POST</code><code><b>/api/v1/affiliations</b></code></summary>
 
 Creates a new Affiliation
 
@@ -173,12 +150,7 @@ Creates a new Affiliation
 </details>
 
 <details>
-<summary>
-  <code>PUT</code>
-  <code>
-    <b>/api/v1/affiliations/{id}</b>
-  </code>
-</summary>
+  <summary><code>PUT</code><code><b>/api/v1/affiliations/{id}</b></code></summary>
 
 Updates an existing Affiliation
 
@@ -203,12 +175,7 @@ Updates an existing Affiliation
 </details>
 
 <details>
-<summary>
-  <code>DELETE</code>
-  <code>
-    <b>/api/v1/affiliations/{id}</b>
-  </code>
-</summary>
+  <summary><code>DELETE</code><code><b>/api/v1/affiliations/{id}</b></code></summary>
 
 Deletes an existing Affiliation 
 
@@ -235,12 +202,7 @@ Deletes an existing Affiliation
 #### Devil Fruit Type
 
 <details>
-<summary>
-  <code>GET</code>
-  <code>
-    <b>/api/v1/df-types/{id}</b>
-  </code>
-</summary>
+  <summary><code>GET</code><code><b>/api/v1/df-types/{id}</b></code></summary>
 
 Gets a specific Devil Fruit Type by its ID
 
@@ -266,12 +228,7 @@ Gets a specific Devil Fruit Type by its ID
 </details>
 
 <details>
-<summary>
-  <code>GET</code>
-  <code>
-    <b>/api/v1/df-types?keyword={keyword}&page={page}&size={size}</b>
-  </code>
-</summary>
+  <summary><code>GET</code><code><b>/api/v1/df-types?keyword={keyword}&page={page}&size={size}</b></code></summary>
 
 Gets Devil Fruit Types where by default page is 1 and size is 10
 
@@ -303,12 +260,7 @@ Gets Devil Fruit Types where by default page is 1 and size is 10
 </details>
 
 <details>
-<summary>
-  <code>POST</code>
-  <code>
-    <b>/api/v1/df-types</b>
-  </code>
-</summary>
+  <summary><code>POST</code><code><b>/api/v1/df-types</b></code></summary>
 
 Creates a new Devil Fruit Type
 
@@ -332,12 +284,7 @@ Creates a new Devil Fruit Type
 </details>
 
 <details>
-<summary>
-  <code>PUT</code>
-  <code>
-    <b>/api/v1/df-types/{id}</b>
-  </code>
-</summary>
+  <summary><code>PUT</code><code><b>/api/v1/df-types/{id}</b></code></summary>
 
 Updates an existing Devil Fruit Type
 
@@ -362,12 +309,7 @@ Updates an existing Devil Fruit Type
 </details>
 
 <details>
-<summary>
-  <code>DELETE</code>
-  <code>
-    <b>/api/v1/df-types/{id}</b>
-  </code>
-</summary>
+  <summary><code>DELETE</code><code><b>/api/v1/df-types/{id}</b></code></summary>
 
 Deletes an existing Devil Fruit Type
 
@@ -394,12 +336,7 @@ Deletes an existing Devil Fruit Type
 #### Occupation
 
 <details>
-<summary>
-  <code>GET</code>
-  <code>
-    <b>/api/v1/occupations/{id}</b>
-  </code>
-</summary>
+  <summary><code>GET</code><code><b>/api/v1/occupations/{id}</b></code></summary>
 
 Gets a specific Occupation by its ID
 
@@ -425,12 +362,7 @@ Gets a specific Occupation by its ID
 </details>
 
 <details>
-<summary>
-  <code>GET</code>
-  <code>
-    <b>/api/v1/occupations?keyword={keyword}&page={page}&size={size}</b>
-  </code>
-</summary>
+  <summary><code>GET</code><code><b>/api/v1/occupations?keyword={keyword}&page={page}&size={size}</b></code></summary>
 
 Gets Occupations where by default page is 1 and size is 10
 
@@ -462,12 +394,7 @@ Gets Occupations where by default page is 1 and size is 10
 </details>
 
 <details>
-<summary>
-  <code>POST</code>
-  <code>
-    <b>/api/v1/occupations</b>
-  </code>
-</summary>
+  <summary><code>POST</code><code><b>/api/v1/occupations</b></code></summary>
 
 Creates a new Occupation
 
@@ -491,12 +418,7 @@ Creates a new Occupation
 </details>
 
 <details>
-<summary>
-  <code>PUT</code>
-  <code>
-    <b>/api/v1/occupations/{id}</b>
-  </code>
-</summary>
+  <summary><code>PUT</code><code><b>/api/v1/occupations/{id}</b></code></summary>
 
 Updates an existing Occupation
 
@@ -521,12 +443,7 @@ Updates an existing Occupation
 </details>
 
 <details>
-<summary>
-  <code>DELETE</code>
-  <code>
-    <b>/api/v1/occupations/{id}</b>
-  </code>
-</summary>
+  <summary><code>DELETE</code><code><b>/api/v1/occupations/{id}</b></code></summary>
 
 Deletes an existing Occupation
 
@@ -553,12 +470,7 @@ Deletes an existing Occupation
 #### Region
 
 <details>
-<summary>
-  <code>GET</code>
-  <code>
-    <b>/api/v1/regions/{id}</b>
-  </code>
-</summary>
+  <summary><code>GET</code><code><b>/api/v1/regions/{id}</b></code></summary>
 
 Gets a specific Region by its ID
 
@@ -584,12 +496,7 @@ Gets a specific Region by its ID
 </details>
 
 <details>
-<summary>
-  <code>GET</code>
-  <code>
-    <b>/api/v1/regions?keyword={keyword}&page={page}&size={size}</b>
-  </code>
-</summary>
+  <summary><code>GET</code><code><b>/api/v1/regions?keyword={keyword}&page={page}&size={size}</b></code></summary>
 
 Gets Regions where by default page is 1 and size is 10
 
@@ -621,12 +528,7 @@ Gets Regions where by default page is 1 and size is 10
 </details>
 
 <details>
-<summary>
-  <code>POST</code>
-  <code>
-    <b>/api/v1/regions</b>
-  </code>
-</summary>
+  <summary><code>POST</code><code><b>/api/v1/regions</b></code></summary>
 
 Creates a new Region
 
@@ -650,12 +552,7 @@ Creates a new Region
 </details>
 
 <details>
-<summary>
-  <code>PUT</code>
-  <code>
-    <b>/api/v1/regions/{id}</b>
-  </code>
-</summary>
+  <summary><code>PUT</code><code><b>/api/v1/regions/{id}</b></code></summary>
 
 Updates an existing Region
 
@@ -680,12 +577,7 @@ Updates an existing Region
 </details>
 
 <details>
-<summary>
-  <code>DELETE</code>
-  <code>
-    <b>/api/v1/regions/{id}</b>
-  </code>
-</summary>
+  <summary><code>DELETE</code><code><b>/api/v1/regions/{id}</b></code></summary>
 
 Deletes an existing Region
 
@@ -712,12 +604,7 @@ Deletes an existing Region
 #### Devil Fruit
 
 <details>
-<summary>
-  <code>GET</code>
-  <code>
-    <b>/api/v1/devil-fruits/{id}</b>
-  </code>
-</summary>
+  <summary><code>GET</code><code><b>/api/v1/devil-fruits/{id}</b></code></summary>
 
 Gets a specific Devil Fruit by its ID
 
@@ -743,12 +630,7 @@ Gets a specific Devil Fruit by its ID
 </details>
 
 <details>
-<summary>
-  <code>GET</code>
-  <code>
-    <b>/api/v1/devil-fruits?keyword={keyword}&page={page}&size={size}</b>
-  </code>
-</summary>
+  <summary><code>GET</code><code><b>/api/v1/devil-fruits?keyword={keyword}&page={page}&size={size}</b></code></summary>
 
 Gets Devil Fruits where by default page is 1 and size is 10
 
@@ -780,12 +662,7 @@ Gets Devil Fruits where by default page is 1 and size is 10
 </details>
 
 <details>
-<summary>
-  <code>POST</code>
-  <code>
-    <b>/api/v1/devil-fruits</b>
-  </code>
-</summary>
+  <summary><code>POST</code><code><b>/api/v1/devil-fruits</b></code></summary>
 
 Creates a new Devil Fruit
 
@@ -809,12 +686,7 @@ Creates a new Devil Fruit
 </details>
 
 <details>
-<summary>
-  <code>PUT</code>
-  <code>
-    <b>/api/v1/devil-fruits/{id}</b>
-  </code>
-</summary>
+  <summary><code>PUT</code><code><b>/api/v1/devil-fruits/{id}</b></code></summary>
 
 Updates an existing Devil Fruit
 
@@ -839,12 +711,7 @@ Updates an existing Devil Fruit
 </details>
 
 <details>
-<summary>
-  <code>DELETE</code>
-  <code>
-    <b>/api/v1/devil-fruits/{id}</b>
-  </code>
-</summary>
+  <summary><code>DELETE</code><code><b>/api/v1/devil-fruits/{id}</b></code></summary>
 
 Deletes an existing Devil Fruit
 
@@ -871,12 +738,7 @@ Deletes an existing Devil Fruit
 #### Figure
 
 <details>
-<summary>
-  <code>GET</code>
-  <code>
-    <b>/api/v1/figures/{id}</b>
-  </code>
-</summary>
+  <summary><code>GET</code><code><b>/api/v1/figures/{id}</b></code></summary>
 
 Gets a specific Figure by its ID
 
@@ -902,12 +764,7 @@ Gets a specific Figure by its ID
 </details>
 
 <details>
-<summary>
-  <code>GET</code>
-  <code>
-    <b>/api/v1/figures?keyword={keyword}&page={page}&size={size}</b>
-  </code>
-</summary>
+  <summary><code>GET</code><code><b>/api/v1/figures?keyword={keyword}&page={page}&size={size}</b></code></summary>
 
 Gets Figures where by default page is 1 and size is 10
 
@@ -939,12 +796,7 @@ Gets Figures where by default page is 1 and size is 10
 </details>
 
 <details>
-<summary>
-  <code>POST</code>
-  <code>
-    <b>/api/v1/figures</b>
-  </code>
-</summary>
+  <summary><code>POST</code><code><b>/api/v1/figures</b></code></summary>
 
 Creates a new Figure
 
@@ -968,12 +820,7 @@ Creates a new Figure
 </details>
 
 <details>
-<summary>
-  <code>PUT</code>
-  <code>
-    <b>/api/v1/figures/{id}</b>
-  </code>
-</summary>
+  <summary><code>PUT</code><code><b>/api/v1/figures/{id}</b></code></summary>
 
 Updates an existing Figure
 
@@ -998,12 +845,7 @@ Updates an existing Figure
 </details>
 
 <details>
-<summary>
-  <code>DELETE</code>
-  <code>
-    <b>/api/v1/figures/{id}</b>
-  </code>
-</summary>
+  <summary><code>DELETE</code><code><b>/api/v1/figures/{id}</b></code></summary>
 
 Deletes an existing Figure
 
